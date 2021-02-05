@@ -48,6 +48,7 @@ typedef struct	s_philosopher
 	pthread_t	thread;
 	struct timeval	start;
 	pthread_mutex_t *print_mutex;
+	pthread_mutex_t *fork_mutex;
 	int			*is_over;
 }				t_philosopher;
 
@@ -63,6 +64,7 @@ typedef struct	s_game
 	t_list		*ptrs;
 	struct timeval start;
 	pthread_mutex_t print_mutex;
+	pthread_mutex_t fork_mutex;
 	int			is_over;
 	// int			id_philo;
 }				t_game;

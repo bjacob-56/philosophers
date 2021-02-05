@@ -35,23 +35,14 @@ int	get_forks(t_philosopher *philo)
 {
 	struct timeval tv;
 
-	while (pthread_mutex_lock(&philo->fork_l->mutex))
-	{
-		gettimeofday(&tv, NULL);
-		check_dead(tv, philo);
-		if (philo->state == DEAD)
-			return (SUCCESS);
-	}
-	while (pthread_mutex_lock(&philo->fork_r->mutex))
-	{
-		gettimeofday(&tv, NULL);
-		check_dead(tv, philo);
-		if (philo->state == DEAD)
-		{
-			pthread_mutex_unlock(&philo->fork_r->mutex);
-			return (SUCCESS);
-		}
-	}
+	pthread_mutex_lock(philo->fork_mutex);
+	pthread_mutex_lock(&philo->fork_l->mutex);
+	gettimeofday(&tv, NULL);
+	print_state(philo, tv, "has taken a fork");
+	pthread_mutex_lock(&philo->fork_r->mutex);
+	gettimeofday(&tv, NULL);
+	print_state(philo, tv, "has taken a fork");
+	pthread_mutex_unlock(philo->fork_mutex);
 	return (SUCCESS);
 }
 /////////////////////////////////////////////////

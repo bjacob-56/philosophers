@@ -37,6 +37,7 @@ static int	philosopher_init(t_game *game, int i)
 	philo->fork_r = (game->fork)[(i + 1) % game->nb_philo];
 	philo->start = game->start;
 	philo->print_mutex = &game->print_mutex;
+	philo->fork_mutex = &game->fork_mutex;
 	philo->is_over = &game->is_over;
 	(game->philo)[i] = philo;
 	return (SUCCESS);
@@ -76,6 +77,8 @@ int			game_init(t_game *game)
 		if (philosopher_init(game, i) == FAILURE)
 			return (FAILURE);
 	if (pthread_mutex_init(&game->print_mutex, NULL))
+		return (ft_error(game, NULL, F_MUTEX_CREATE));
+	if (pthread_mutex_init(&game->fork_mutex, NULL))
 		return (ft_error(game, NULL, F_MUTEX_CREATE));
 // dprintf(1, "addr game mutex = %p\n", &game->print_mutex); ////////////////
 	
