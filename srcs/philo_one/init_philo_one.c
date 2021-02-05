@@ -11,6 +11,7 @@ int			catch_arg(t_game *game, int argc, char **argv)
 	game->nb_philo_eat = 0;
 	if (argc == 6)
 		game->nb_philo_eat = ft_atoi(argv[5]);
+	// game->id_philo = 0;
 	return (SUCCESS);
 }
 
@@ -22,10 +23,13 @@ static int	philosopher_init(t_game *game, int i)
 	if (!(philo = malloc_lst(game, sizeof(t_philosopher))))
 		return (ft_error(game, NULL, F_MALLOC));
 	philo->number = i + 1;
-	philo->last_meal = 0;
-	if (!(elem = ft_lstnew(philo)) || !add_lst_to_free(game, elem))
-		return (ft_error(game, elem, F_MALLOC));
-	ft_lstadd_back(&game->philo, elem);
+	philo->state = THINKING;
+	philo->time_last_meal = 0;
+	philo->time_start_sleep = 0;
+	philo->fork_l = (game->fork)[i];
+	philo->fork_r = (game->fork)[(i + 1) % game->nb_philo];
+	philo->thread = NULL;
+	(game->philo)[i] = philo
 	return (SUCCESS);
 }
 
@@ -37,9 +41,7 @@ static int	fork_init(t_game *game, int i)
 	if (!(fork = malloc_lst(game, sizeof(t_fork))))
 		return (ft_error(game, NULL, F_MALLOC));
 	fork->number = i + 1;
-	if (!(elem = ft_lstnew(fork)) || !add_lst_to_free(game, elem))
-		return (ft_error(game, elem, F_MALLOC));
-	ft_lstadd_back(&game->fork, elem);
+	(game->fork)[i] = fork;
 	return (SUCCESS);
 }
 
@@ -48,13 +50,16 @@ int			game_init(t_game *game)
 	int		i;
 
 	game.ptrs = NULL;
-	game->philo = NULL;
-	game->fork = NULL;
+	if (!(game->philo = malloc_lst(game, sizeof(t_philosopher*) * game->nb_philo)))
+		return (ft_error(game, NULL, F_MALLOC));
+	if (!(game->fork = malloc_lst(game, sizeof(t_fork*) * game->nb_philo)))
+		return (ft_error(game, NULL, F_MALLOC));
 	i = -1;
 	while (++i < game->nb_philo)
-	{
-		if (philosopher_init(game, i) == FAILURE ||
-			fork_init(game, i) == FAILURE)
+		if (fork_init(game, i) == FAILURE)
 			return (FALURE);
-	}
-}	return (SUCCESS);
+	while (++i < game->nb_philo)
+		if (philosopher_init(game, i) == FAILURE)
+			return (FALURE);
+	return (SUCCESS);
+}

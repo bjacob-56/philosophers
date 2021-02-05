@@ -6,6 +6,10 @@ int	print_error(int error)
 		printf("Wrong number of arguments\n"); // printf
 	else if (error == F_MALLOC)
 		printf("A malloc failed\n");
+	else if (error == F_THREAD_CREATE)
+		printf("The thread couldn't be created\n");
+	else if (error == F_THREAD_JOIN)
+		printf("The thread couldn't be joined\n");
 	return (FAILURE);
 }
 

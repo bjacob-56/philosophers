@@ -49,3 +49,5 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 	}
 	*lst = NULL;
 }
+
+Void	ft_lst_get_philo()

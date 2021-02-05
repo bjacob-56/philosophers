@@ -4,12 +4,19 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+#include <pthread.h>
 
 # define SUCCESS 0
 # define FAILURE 1
 
 # define F_NB_ARG -1
 # define F_MALLOC -2
+# define F_THREAD_CREATE -3
+# define F_THREAD_JOIN -4
+
+# define EATING 0
+# define THINKING 1
+# define SLEEPING 2
 
 typedef struct	s_list
 {
@@ -19,8 +26,13 @@ typedef struct	s_list
 
 typedef struct	s_philosopher
 {
-	int	number;
-	int	last_meal;
+	int		number;
+	int		state;
+	int		time_last_meal;
+	int		time_start_sleep;
+	t_fork	*fork_l;
+	t_fork	*fork_r;
+	pthread_t	thread;
 }				t_philosopher;
 
 typedef struct	s_fork
@@ -35,9 +47,10 @@ typedef struct	s_game
 	int			t_eat;
 	int			t_sleep;
 	int			nb_philo_eat;
-	t_list		*philo;
-	t_list		*fork;
+	t_philosopher	**philo;
+	t_fork			**fork;
 	t_list		ptrs;
+	// int			id_philo;
 }				t_game;
 
 
