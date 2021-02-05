@@ -10,9 +10,9 @@ int	print_error(t_game *game, int error)
 		printf("The mutex couldn't be created\n");
 	else
 	{
-		while (pthread_mutex_lock(&game->print_mutex))
-			if (game->is_over)
-				return (SUCCESS);
+		pthread_mutex_lock(&game->print_mutex);
+		if (game->is_over)
+			return (SUCCESS);
 		if (error == F_THREAD_CREATE)
 			printf("The thread couldn't be created\n");
 		else if (error == F_THREAD_JOIN)

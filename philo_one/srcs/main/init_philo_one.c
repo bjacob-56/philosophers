@@ -67,6 +67,12 @@ int			game_init(t_game *game)
 		return (ft_error(game, NULL, F_MALLOC));
 	if (!(game->fork = malloc_lst(game, sizeof(t_fork*) * game->nb_philo)))
 		return (ft_error(game, NULL, F_MALLOC));
+
+	if (pthread_mutex_init(&game->print_mutex, NULL))
+		return (ft_error(game, NULL, F_MUTEX_CREATE));
+	if (pthread_mutex_init(&game->fork_mutex, NULL))
+		return (ft_error(game, NULL, F_MUTEX_CREATE));
+
 	i = -1;
 	while (++i < game->nb_philo)
 		if (fork_init(game, i) == FAILURE)
@@ -76,10 +82,7 @@ int			game_init(t_game *game)
 	while (++i < game->nb_philo)
 		if (philosopher_init(game, i) == FAILURE)
 			return (FAILURE);
-	if (pthread_mutex_init(&game->print_mutex, NULL))
-		return (ft_error(game, NULL, F_MUTEX_CREATE));
-	if (pthread_mutex_init(&game->fork_mutex, NULL))
-		return (ft_error(game, NULL, F_MUTEX_CREATE));
+
 // dprintf(1, "addr game mutex = %p\n", &game->print_mutex); ////////////////
 	
 	return (SUCCESS);
