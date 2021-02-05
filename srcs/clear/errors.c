@@ -1,4 +1,4 @@
-#include "../includes/philosophers.h"
+#include "../../includes/philosophers.h"
 
 int	print_error(int error)
 {
@@ -10,6 +10,8 @@ int	print_error(int error)
 		printf("The thread couldn't be created\n");
 	else if (error == F_THREAD_JOIN)
 		printf("The thread couldn't be joined\n");
+	else if (error == F_MUTEX_CREATE)
+		printf("The mutex couldn't be created\n");
 	return (FAILURE);
 }
 

@@ -1,4 +1,4 @@
-#include "../includes/philosophers.h"
+#include "../../includes/philosophers.h"
 
 void	*add_lst_to_free(t_game *game, void *ptr)
 {
@@ -33,5 +33,8 @@ void	*malloc_lst(t_game *game, int size)
 int		free_all_ptr(t_game *game)
 {
 	ft_lstclear(&game->ptrs, free);
+
+// int pthread_mutex_destroy(pthread_mutex_t *mutex);
+
 	return (SUCCESS);
 }

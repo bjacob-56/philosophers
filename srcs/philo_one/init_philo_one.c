@@ -1,4 +1,4 @@
-#include "../includes/philosophers.h"
+#include "../../includes/philosophers.h"
 
 int			catch_arg(t_game *game, int argc, char **argv)
 {
@@ -24,6 +24,10 @@ static int	philosopher_init(t_game *game, int i)
 		return (ft_error(game, NULL, F_MALLOC));
 	philo->number = i + 1;
 	philo->state = THINKING;
+	philo->t_die = game->t_die;
+	philo->t_eat = game->t_eat;
+	philo->t_sleep = game->t_sleep;
+	philo->nb_philo_eat = game->nb_philo_eat;
 	philo->time_last_meal = 0;
 	philo->time_start_sleep = 0;
 	philo->fork_l = (game->fork)[i];
@@ -41,6 +45,8 @@ static int	fork_init(t_game *game, int i)
 	if (!(fork = malloc_lst(game, sizeof(t_fork))))
 		return (ft_error(game, NULL, F_MALLOC));
 	fork->number = i + 1;
+	if (pthread_mutex_init(fork->mutex, NULL))
+		return (ft_error(game, NULL, F_MUTEX_CREATE));
 	(game->fork)[i] = fork;
 	return (SUCCESS);
 }
