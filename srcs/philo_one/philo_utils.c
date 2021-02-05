@@ -4,7 +4,7 @@ int		print_state(t_philosopher *philo, struct timeval tv, char *str)
 {
 	pthread_mutex_lock(philo->print_mutex);
 	if (!*(philo->is_over))
-		printf("%d %d %s\n", get_relative_time(philo->start, tv), philo->number, str);	// printf
+		dprintf(1, "%d %d %s\n", get_relative_time(philo->start, tv), philo->number, str);	// printf
 	pthread_mutex_unlock(philo->print_mutex);
 	return (SUCCESS);
 }

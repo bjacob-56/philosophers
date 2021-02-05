@@ -35,14 +35,28 @@ int	get_forks(t_philosopher *philo)
 {
 	struct timeval tv;
 
-	pthread_mutex_lock(philo->fork_mutex);
-	pthread_mutex_lock(&philo->fork_l->mutex);
-	gettimeofday(&tv, NULL);
-	print_state(philo, tv, "has taken a fork");
-	pthread_mutex_lock(&philo->fork_r->mutex);
-	gettimeofday(&tv, NULL);
-	print_state(philo, tv, "has taken a fork");
-	pthread_mutex_unlock(philo->fork_mutex);
+	// pthread_mutex_lock(philo->fork_mutex);
+	if (philo->number % 2)
+	{
+		pthread_mutex_lock(&philo->fork_r->mutex);
+		gettimeofday(&tv, NULL);
+		print_state(philo, tv, "has taken a fork right");
+	// dprintf(1, "fork = %d\n", philo->fork_l->number);
+		pthread_mutex_lock(&philo->fork_l->mutex);
+		gettimeofday(&tv, NULL);
+		print_state(philo, tv, "has taken a fork left");
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->fork_l->mutex);
+		gettimeofday(&tv, NULL);
+		print_state(philo, tv, "has taken a fork left");
+	// dprintf(1, "fork = %d\n", philo->fork_r->number);
+		pthread_mutex_lock(&philo->fork_r->mutex);
+		gettimeofday(&tv, NULL);
+		print_state(philo, tv, "has taken a fork right");
+	}
+	// pthread_mutex_unlock(philo->fork_mutex);
 	return (SUCCESS);
 }
 /////////////////////////////////////////////////
