@@ -52,10 +52,6 @@ Mkfile.old
 dkms.conf
 
 # exec
-philo_one
-philo_two
-philp_three
-
 
 *.h.gch
 
