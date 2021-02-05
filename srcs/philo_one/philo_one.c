@@ -1,6 +1,5 @@
 #include "../../includes/philosophers.h"
 
-// void	*launch_philo(t_philosopher *philo)
 void	*launch_philo(void *ptr)
 {
 	int				count;
@@ -8,17 +7,17 @@ void	*launch_philo(void *ptr)
 
 	philo = (t_philosopher*)ptr;
 	count = 0;
-	while (philo->state != DEAD &&
+	while (!*(philo->is_over) && philo->state != DEAD &&
 		(!philo->nb_philo_eat || count < philo->nb_philo_eat))
 	{
 		if (philo->state == THINKING)
 			philo_eat(philo, &count);
-		if (philo->state == EATING)
+		else if (philo->state == EATING)
 			philo_sleep(philo);
-		if (philo->state == SLEEPING)
+		else if (philo->state == SLEEPING)
 			philo_think(philo);
 	}
-	return (ptr);	// quelle valeur ?
+	return (ptr);
 }
 
 int	create_thread_philo(t_game *game, int i)

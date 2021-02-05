@@ -3,7 +3,7 @@
 int			catch_arg(t_game *game, int argc, char **argv)
 {
 	if (argc < 5 || argc > 6)
-		return (print_error(F_NB_ARG));
+		return (print_error(game, F_NB_ARG));
 	game->nb_philo = ft_atoi(argv[1]);
 	game->t_die = ft_atoi(argv[2]);
 	game->t_eat = ft_atoi(argv[3]);
@@ -36,6 +36,8 @@ static int	philosopher_init(t_game *game, int i)
 	philo->fork_l = (game->fork)[i];
 	philo->fork_r = (game->fork)[(i + 1) % game->nb_philo];
 	philo->start = game->start;
+	philo->print_mutex = &game->print_mutex;
+	philo->is_over = &game->is_over;
 	(game->philo)[i] = philo;
 	return (SUCCESS);
 }
@@ -58,6 +60,7 @@ int			game_init(t_game *game)
 {
 	int		i;
 
+	game->is_over = 0;
 	game->ptrs = NULL;
 	if (!(game->philo = malloc_lst(game, sizeof(t_philosopher*) * game->nb_philo)))
 		return (ft_error(game, NULL, F_MALLOC));
@@ -72,5 +75,9 @@ int			game_init(t_game *game)
 	while (++i < game->nb_philo)
 		if (philosopher_init(game, i) == FAILURE)
 			return (FAILURE);
+	if (pthread_mutex_init(&game->print_mutex, NULL))
+		return (ft_error(game, NULL, F_MUTEX_CREATE));
+// dprintf(1, "addr game mutex = %p\n", &game->print_mutex); ////////////////
+	
 	return (SUCCESS);
 }

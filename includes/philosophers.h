@@ -47,6 +47,8 @@ typedef struct	s_philosopher
 	t_fork		*fork_r;
 	pthread_t	thread;
 	struct timeval	start;
+	pthread_mutex_t *print_mutex;
+	int			*is_over;
 }				t_philosopher;
 
 typedef struct	s_game
@@ -60,6 +62,8 @@ typedef struct	s_game
 	t_fork			**fork;
 	t_list		*ptrs;
 	struct timeval start;
+	pthread_mutex_t print_mutex;
+	int			is_over;
 	// int			id_philo;
 }				t_game;
 
@@ -73,6 +77,7 @@ int	game_init(t_game *game);
 /*
 ** philo_utils.c
 */
+int		print_state(t_philosopher *philo, struct timeval tv, char *str);
 int		get_relative_time(struct timeval start, struct timeval tv);
 int		get_time_since_start(t_philosopher *philo);
 int		check_dead(struct timeval tv, t_philosopher *philo);
@@ -107,7 +112,7 @@ int		free_all_ptr(t_game *game);
 /*
 ** errors.c
 */
-int	print_error(int error);
+int	print_error(t_game *game, int error);
 int	ft_error(t_game *game, void *ptr, int error);
 
 
