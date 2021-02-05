@@ -10,6 +10,7 @@
 # include <sys/time.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 # define SUCCESS 0
 # define FAILURE 1
