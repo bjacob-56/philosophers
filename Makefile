@@ -3,7 +3,7 @@ OBJ_DIR	:= obj/
 
 OBJ_DIRS = $(addprefix $(OBJ_DIR), philo_one philo_two philo_three clear utils)
 
-PRE_SRCS_ONE =	philo_one/philo_one philo_one/init_philo_one \
+PRE_SRCS_ONE =	philo_one/philo_one philo_one/init_philo_one philo_one/activity philo_one/philo_utils \
 				utils/lst_utils utils/nb_utils \
 				clear/errors clear/clear_objects
 
@@ -17,14 +17,15 @@ NAME_THREE = philo_three
 
 CC = clang
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address -lpthread -D_REENTRANT
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+THFLAGS = -lpthread -D_REENTRANT
 # CFLAGS = -Wall -Wextra -Werror -g3
 INC =	-I./includes 
 
 all:	$(NAME_ONE) $(NAME_TWO) $(NAME_THREE)
 
 $(NAME_ONE): $(OBJ_DIRS) $(OBJS_ONE)
-	$(CC) $(CFLAGS) $(OBJS) $(INC) -o $(NAME) 
+	$(CC) $(CFLAGS) $(THFLAGS) $(OBJS_ONE) $(INC) -o $(NAME_ONE) 
 	@echo "----- \033[32m $@ created\033[0m  -----"
 
 $(NAME_TWO):

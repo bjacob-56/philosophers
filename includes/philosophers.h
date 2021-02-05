@@ -27,6 +27,12 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
+typedef struct	s_fork
+{
+	int	number;
+	pthread_mutex_t mutex;
+}				t_fork;
+
 typedef struct	s_philosopher
 {
 	int			number;
@@ -40,13 +46,8 @@ typedef struct	s_philosopher
 	t_fork		*fork_l;
 	t_fork		*fork_r;
 	pthread_t	thread;
+	struct timeval	start;
 }				t_philosopher;
-
-typedef struct	s_fork
-{
-	int	number;
-	pthread_mutex_t *mutex;
-}				t_fork;
 
 typedef struct	s_game
 {
@@ -57,7 +58,7 @@ typedef struct	s_game
 	int			nb_philo_eat;
 	t_philosopher	**philo;
 	t_fork			**fork;
-	t_list		ptrs;
+	t_list		*ptrs;
 	// int			id_philo;
 }				t_game;
 
@@ -68,6 +69,24 @@ typedef struct	s_game
 int	catch_arg(t_game *game, int argc, char **argv);
 int	game_init(t_game *game);
 
+/*
+** philo_utils.c
+*/
+int		get_time_since_start(t_philosopher *philo);
+int		check_dead(t_philosopher *philo);
+
+
+/*
+** activity.c
+*/
+int		philo_eat(t_philosopher *philo, int *count);
+int		philo_sleep(t_philosopher *philo);
+int		philo_think(t_philosopher *philo);
+
+/*
+** nb_utils.c
+*/
+int	ft_atoi(char *str);
 
 /*
 ** lst_utils.c
