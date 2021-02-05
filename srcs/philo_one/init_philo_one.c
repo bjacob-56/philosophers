@@ -12,6 +12,10 @@ int			catch_arg(t_game *game, int argc, char **argv)
 	if (argc == 6)
 		game->nb_philo_eat = ft_atoi(argv[5]);
 	// game->id_philo = 0;
+
+
+// dprintf(1, "nb_philo = %d\nt_die = %d\nt_eat = %d\nt_sleep = %d\nb_philo_eat = %d\n", game->nb_philo, game->t_die, game->t_eat, game->t_sleep, game->nb_philo_eat);
+
 	return (SUCCESS);
 }
 
@@ -31,7 +35,7 @@ static int	philosopher_init(t_game *game, int i)
 	philo->time_start_sleep = 0;
 	philo->fork_l = (game->fork)[i];
 	philo->fork_r = (game->fork)[(i + 1) % game->nb_philo];
-	// philo->thread = NULL;
+	philo->start = game->start;
 	(game->philo)[i] = philo;
 	return (SUCCESS);
 }
@@ -63,6 +67,7 @@ int			game_init(t_game *game)
 	while (++i < game->nb_philo)
 		if (fork_init(game, i) == FAILURE)
 			return (FAILURE);
+	gettimeofday(&(game->start), NULL);	// valeur retour a checker ?
 	i = -1;
 	while (++i < game->nb_philo)
 		if (philosopher_init(game, i) == FAILURE)

@@ -59,6 +59,7 @@ typedef struct	s_game
 	t_philosopher	**philo;
 	t_fork			**fork;
 	t_list		*ptrs;
+	struct timeval start;
 	// int			id_philo;
 }				t_game;
 
@@ -72,9 +73,9 @@ int	game_init(t_game *game);
 /*
 ** philo_utils.c
 */
+int		get_relative_time(struct timeval start, struct timeval tv);
 int		get_time_since_start(t_philosopher *philo);
-int		check_dead(t_philosopher *philo);
-
+int		check_dead(struct timeval tv, t_philosopher *philo);
 
 /*
 ** activity.c

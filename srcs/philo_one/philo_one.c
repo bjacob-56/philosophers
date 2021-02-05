@@ -7,13 +7,10 @@ void	*launch_philo(void *ptr)
 	t_philosopher *philo;
 
 	philo = (t_philosopher*)ptr;
-	gettimeofday(&(philo->start), NULL);	// valeur retour a checker ?
-
 	count = 0;
 	while (philo->state != DEAD &&
 		(!philo->nb_philo_eat || count < philo->nb_philo_eat))
 	{
-		check_dead(philo);
 		if (philo->state == THINKING)
 			philo_eat(philo, &count);
 		if (philo->state == EATING)
