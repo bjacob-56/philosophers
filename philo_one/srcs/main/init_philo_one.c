@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_philo_one.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 16:32:21 by bjacob            #+#    #+#             */
+/*   Updated: 2021/02/13 16:32:22 by bjacob           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/philosophers.h"
 
 int			catch_arg(t_game *game, int argc, char **argv)
@@ -12,7 +24,6 @@ int			catch_arg(t_game *game, int argc, char **argv)
 	if (argc == 6)
 		game->nb_philo_eat = ft_atoi(argv[5]);
 	// game->id_philo = 0;
-
 
 // dprintf(1, "nb_philo = %d\nt_die = %d\nt_eat = %d\nt_sleep = %d\nb_philo_eat = %d\n", game->nb_philo, game->t_die, game->t_eat, game->t_sleep, game->nb_philo_eat);
 
@@ -50,7 +61,6 @@ static int	fork_init(t_game *game, int i)
 	if (!(fork = malloc_lst(game, sizeof(t_fork))))
 		return (ft_error(game, NULL, F_MALLOC));
 	fork->number = i + 1;
-	// fork->mutex = PTHREAD_MUTEX_INITIALIZER;
 	if (pthread_mutex_init(&fork->mutex, NULL))
 		return (ft_error(game, NULL, F_MUTEX_CREATE));
 	(game->fork)[i] = fork;
@@ -77,7 +87,7 @@ int			game_init(t_game *game)
 	while (++i < game->nb_philo)
 		if (fork_init(game, i) == FAILURE)
 			return (FAILURE);
-	gettimeofday(&(game->start), NULL);	// valeur retour a checker ?
+	gettimeofday(&(game->start), NULL);
 	i = -1;
 	while (++i < game->nb_philo)
 		if (philosopher_init(game, i) == FAILURE)

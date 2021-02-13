@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 16:35:47 by bjacob            #+#    #+#             */
+/*   Updated: 2021/02/13 16:35:48 by bjacob           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/philosophers.h"
 
 int		print_state(t_philosopher *philo, struct timeval tv, char *str)
@@ -6,7 +18,7 @@ int		print_state(t_philosopher *philo, struct timeval tv, char *str)
 	sem_wait(philo->print_sem);
 
 	if (!*(philo->is_over))
-		dprintf(1, "%d %d %s\n", get_relative_time(philo->start, tv), philo->number, str);	// printf
+		dprintf(1, "%d %d %s\n", get_relative_time(philo->start, tv), philo->number, str);
 
 	// pthread_mutex_unlock(philo->print_mutex);
 	sem_post(philo->print_sem);
@@ -23,7 +35,7 @@ int		get_time_since_start(t_philosopher *philo)
 {
 	struct timeval tv;
 
-	gettimeofday(&tv, NULL); // valeur retour a checker ?
+	gettimeofday(&tv, NULL);
 	// check_dead(tv, philo);
 	return(get_relative_time(philo->start, tv));
 }
@@ -36,7 +48,7 @@ int		check_dead(struct timeval tv, t_philosopher *philo)
 		sem_wait(philo->print_sem);
 	
 		if (!*(philo->is_over))
-			printf("%d %d %s\n", get_relative_time(philo->start, tv), philo->number, "died");	// printf
+			printf("%d %d %s\n", get_relative_time(philo->start, tv), philo->number, "died");
 		*(philo->is_over) = 1;
 		philo->state = DEAD;		
 

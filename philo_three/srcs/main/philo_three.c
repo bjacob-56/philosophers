@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_three.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 16:35:35 by bjacob            #+#    #+#             */
+/*   Updated: 2021/02/13 17:55:26 by bjacob           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/philosophers.h"
 
 void	*launch_philo(void *ptr)
@@ -50,9 +62,18 @@ int	main(int argc, char **argv)
 		else
 			game.tab_pid[i] = program;
 	}
-	waitpid(-1, &status, 0);
+///		gestion a faire pour s'arreter avant mais pas trop tot
+	// i = -1;
+	// while (++i < game.nb_philo)
+		waitpid(-1, &status, 0);
+///
 	i = -1;
 	while (++i < game.nb_philo)	// Bonne maniere de faire ?
 		kill(game.tab_pid[i], SIGKILL);
+
+	sem_close(game.print_sem);
+	sem_close(game.fork_sem);
+	sem_close(game.place_sem);
+		
 	return (free_all_ptr(&game));
 }

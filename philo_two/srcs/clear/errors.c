@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   errors.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 16:26:32 by bjacob            #+#    #+#             */
+/*   Updated: 2021/02/13 16:26:37 by bjacob           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/philosophers.h"
 
 int	print_error(t_game *game, int error)
 {
 	if (error == F_NB_ARG)
-		printf("Wrong number of arguments\n"); // printf
+		printf("Wrong number of arguments\n");
 	else if (error == F_MALLOC)
 		printf("A malloc failed\n");
 	else if (error == F_SEM_CREATE)
@@ -12,7 +24,6 @@ int	print_error(t_game *game, int error)
 	{
 		// pthread_mutex_lock(&game->print_mutex);
 		sem_wait(game->print_sem);
-
 		if (game->is_over)
 			return (SUCCESS);
 		if (error == F_THREAD_CREATE)
@@ -20,7 +31,6 @@ int	print_error(t_game *game, int error)
 		else if (error == F_THREAD_JOIN)
 			printf("The thread couldn't be joined\n");
 		game->is_over = 1;
-
 		// pthread_mutex_unlock(&game->print_mutex);
 		sem_post(game->print_sem);
 	}

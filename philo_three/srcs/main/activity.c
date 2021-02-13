@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   activity.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 16:35:06 by bjacob            #+#    #+#             */
+/*   Updated: 2021/02/13 16:35:09 by bjacob           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/philosophers.h"
 
 static int	ft_eat(t_philosopher *philo, int *count)
@@ -9,14 +21,14 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	check_dead(start_eat, philo);
 	if (!*(philo->is_over) && philo->state != DEAD)
 	{
-		// dprintf(1, "%d %d is eating\n", get_relative_time(philo->start, start_eat), philo->number);	// printf
+		// dprintf(1, "%d %d is eating\n", get_relative_time(philo->start, start_eat), philo->number);
 		print_state(philo, start_eat, "is_eating");
 
 		philo->time_last_meal = get_relative_time(philo->start, start_eat);
-		gettimeofday(&tv, NULL); // valeur retour a checker ?
+		gettimeofday(&tv, NULL);
 		while (get_relative_time(start_eat, tv) < philo->t_eat && philo->state != DEAD)
 		{
-			gettimeofday(&tv, NULL); // valeur retour a checker ?
+			gettimeofday(&tv, NULL);
 			check_dead(tv, philo);
 		}
 	}
@@ -78,16 +90,18 @@ int		philo_sleep(t_philosopher *philo)
 	struct timeval	tv;
 
 	philo->state = SLEEPING;
-	gettimeofday(&start_sleep, NULL);	// valeur retour a checker ?
+	gettimeofday(&start_sleep, NULL);
 	check_dead(start_sleep, philo);
 	if (!*(philo->is_over) && philo->state != DEAD)
 	{
 		print_state(philo, start_sleep, "is sleeping");
-		// dprintf(1, "%d %d is sleeping\n", get_relative_time(philo->start, start_sleep), philo->number);	// printf
-		gettimeofday(&tv, NULL); // valeur retour a checker ?
+
+// dprintf(1, "%d %d is sleeping\n", get_relative_time(philo->start, start_sleep), philo->number);
+
+		gettimeofday(&tv, NULL);
 		while (get_relative_time(start_sleep, tv) < philo->t_sleep && philo->state != DEAD)
 		{
-			gettimeofday(&tv, NULL); // valeur retour a checker ?
+			gettimeofday(&tv, NULL);
 			check_dead(tv, philo);
 		}
 	}
@@ -99,10 +113,12 @@ int		philo_think(t_philosopher *philo)
 	struct timeval	start_think;
 
 	philo->state = THINKING;
-	gettimeofday(&start_think, NULL);	// valeur retour a checker ?
+	gettimeofday(&start_think, NULL);
 	check_dead(start_think, philo);
 	if (!*(philo->is_over) && philo->state != DEAD)
 		print_state(philo, start_think, "is thinking");
-		// dprintf(1, "%d %d is thinking\n", get_relative_time(philo->start, start_think), philo->number);	// printf
+
+// dprintf(1, "%d %d is thinking\n", get_relative_time(philo->start, start_think), philo->number);
+
 	return (SUCCESS);
 }

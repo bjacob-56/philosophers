@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_two.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 16:37:25 by bjacob            #+#    #+#             */
+/*   Updated: 2021/02/13 17:49:57 by bjacob           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/philosophers.h"
 
 void	*launch_philo(void *ptr)
 {
 	int				count;
-	t_philosopher *philo;
+	t_philosopher	*philo;
 
 	philo = (t_philosopher*)ptr;
 	count = 0;
@@ -17,6 +29,7 @@ void	*launch_philo(void *ptr)
 		else if (philo->state == SLEEPING)
 			philo_think(philo);
 	}
+
 	return (ptr);
 }
 
@@ -44,5 +57,10 @@ int	main(int argc, char **argv)
 	while (++i < game.nb_philo)	// Bonne maniere de faire ?
 		if (pthread_join(((game.philo)[i])->thread, NULL)) // 2nd arg a ajuster ?
 			return (ft_error(&game, NULL, F_THREAD_JOIN));
+
+	sem_close(game.print_sem);
+	sem_close(game.fork_sem);
+	sem_close(game.place_sem);
+
 	return (free_all_ptr(&game));
 }
