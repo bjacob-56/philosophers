@@ -57,7 +57,8 @@ int		check_all_philo_dead(t_game *game)
 	while (game->is_over < game->nb_philo && ++i < game->nb_philo)
 	{
 		gettimeofday(&tv, NULL);
-		check_dead(tv, (game->philo)[i]);
+		if (!game->nb_philo_eat || ((game->philo)[i])->state != FULL)
+			check_dead(tv, (game->philo)[i]);
 	}
 	return (SUCCESS);
 }

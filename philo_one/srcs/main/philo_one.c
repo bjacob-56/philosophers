@@ -53,3 +53,5 @@ int	main(int argc, char **argv)
 		check_all_philo_dead(&game);
 	return (free_all_ptr(&game));
 }
+
+

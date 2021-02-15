@@ -41,7 +41,8 @@ static int	ft_eat(t_philosopher *philo, int *count)
 
 	gettimeofday(&start_eat, NULL);
 	// check_dead(start_eat, philo);
-	gettimeofday(&tv, NULL);
+	// gettimeofday(&tv, NULL);
+	tv = start_eat;
 	if (*philo->is_over < philo->nb_philo)
 	{
 		print_state(philo, start_eat, "is_eating");
@@ -52,13 +53,17 @@ static int	ft_eat(t_philosopher *philo, int *count)
 			// check_dead(tv, philo);
 		}
 	}
+	sem_post(philo->fork_sem);
+	sem_post(philo->fork_sem);
 	(*count)++;
 	if (*philo->is_over < philo->nb_philo && *count < philo->nb_philo_eat)
 		print_state(philo, tv, "is sleeping");
 	if (*philo->is_over < philo->nb_philo && *count == philo->nb_philo_eat)
+	{
 		print_state(philo, tv, "is full");
-	sem_post(philo->fork_sem);
-	sem_post(philo->fork_sem);
+		philo->state = FULL;
+		(*(philo->is_over))++;
+	}
 	return (SUCCESS);
 }
 
@@ -67,10 +72,10 @@ static int		ft_sleep(t_philosopher *philo)
 	struct timeval	start_sleep;
 	struct timeval	tv;
 
-	philo->state = SLEEPING;
 	gettimeofday(&start_sleep, NULL);
 	// check_dead(start_sleep, philo);
-	gettimeofday(&tv, NULL);
+	// gettimeofday(&tv, NULL);
+	tv = start_sleep;
 	if (*philo->is_over < philo->nb_philo)
 	{
 		print_state(philo, start_sleep, "is sleeping");
@@ -89,10 +94,10 @@ static int		ft_sleep(t_philosopher *philo)
 int		philo_circle(t_philosopher *philo, int *count)
 {
 	get_forks(philo);
-	if (philo->state == DEAD)
-		return (SUCCESS);
+	// if (*philo->is_over < philo->nb_philo)
+	// 	return (SUCCESS);
 	ft_eat(philo, count);
-	if (*count < philo->nb_philo_eat)
+	if (!philo->nb_philo_eat || *count < philo->nb_philo_eat)
 		ft_sleep(philo);
 	return (SUCCESS);
 }

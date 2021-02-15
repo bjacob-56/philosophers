@@ -47,7 +47,6 @@ int		check_dead(struct timeval tv, t_philosopher *philo)
 		if (*philo->is_over < philo->nb_philo)
 			printf("%d %d %s\n", get_relative_time(philo->start, tv), philo->number, "died");
 		*(philo->is_over) = philo->nb_philo;
-		// philo->state = DEAD;		
 		sem_post(philo->print_sem);
 	}
 	return (SUCCESS);
@@ -62,7 +61,8 @@ int		check_all_philo_dead(t_game *game)
 	while (game->is_over < game->nb_philo && ++i < game->nb_philo)
 	{
 		gettimeofday(&tv, NULL);
-		check_dead(tv, (game->philo)[i]);
+		if (!game->nb_philo_eat || ((game->philo)[i])->state != FULL)
+			check_dead(tv, (game->philo)[i]);
 	}
 	return (SUCCESS);
 }

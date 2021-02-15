@@ -17,13 +17,11 @@ static int	get_forks(t_philosopher *philo)
 {
 	struct timeval tv;
 
-	// pthread_mutex_lock(philo->fork_mutex);
 	if (philo->number % 2)
 	{
 		pthread_mutex_lock(&philo->fork_r->mutex);
 		gettimeofday(&tv, NULL);
-		print_state(philo, tv, "has taken a fork right");
-	// dprintf(1, "fork = %d\n", philo->fork_l->number);
+		print_state(philo, tv, "has taken a fork right"); // a enlever 'right'
 		pthread_mutex_lock(&philo->fork_l->mutex);
 		gettimeofday(&tv, NULL);
 		print_state(philo, tv, "has taken a fork left");
@@ -33,12 +31,10 @@ static int	get_forks(t_philosopher *philo)
 		pthread_mutex_lock(&philo->fork_l->mutex);
 		gettimeofday(&tv, NULL);
 		print_state(philo, tv, "has taken a fork left");
-	// dprintf(1, "fork = %d\n", philo->fork_r->number);
 		pthread_mutex_lock(&philo->fork_r->mutex);
 		gettimeofday(&tv, NULL);
 		print_state(philo, tv, "has taken a fork right");
 	}
-	// pthread_mutex_unlock(philo->fork_mutex);
 	return (SUCCESS);
 }
 /////////////////////////////////////////////////
@@ -50,7 +46,8 @@ static int	ft_eat(t_philosopher *philo, int *count)
 
 	gettimeofday(&start_eat, NULL);
 	// check_dead(start_eat, philo);
-	gettimeofday(&tv, NULL);
+	tv = start_eat;
+	// gettimeofday(&tv, NULL);
 	if (*philo->is_over < philo->nb_philo)
 	{
 		print_state(philo, start_eat, "is eating");
@@ -61,16 +58,17 @@ static int	ft_eat(t_philosopher *philo, int *count)
 			// check_dead(tv, philo);
 		}
 	}
+	pthread_mutex_unlock(&philo->fork_l->mutex);
+	pthread_mutex_unlock(&philo->fork_r->mutex);
 	(*count)++;
 	if (*philo->is_over < philo->nb_philo && *count < philo->nb_philo_eat)
 		print_state(philo, tv, "is sleeping");
 	if (*philo->is_over < philo->nb_philo && *count == philo->nb_philo_eat)
 	{
 		print_state(philo, tv, "is full");
+		philo->state = FULL;
 		(*(philo->is_over))++;
 	}
-	pthread_mutex_unlock(&philo->fork_l->mutex);
-	pthread_mutex_unlock(&philo->fork_r->mutex);
 	return (SUCCESS);
 }
 
@@ -81,7 +79,8 @@ static int	ft_sleep(t_philosopher *philo)
 
 	gettimeofday(&start_sleep, NULL);
 	// check_dead(start_sleep, philo);
-	gettimeofday(&tv, NULL);
+	// gettimeofday(&tv, NULL);
+	tv = start_sleep;
 	if (*philo->is_over < philo->nb_philo)
 	{
 		while (get_relative_time(start_sleep, tv) < philo->t_sleep && *philo->is_over < philo->nb_philo)
@@ -99,10 +98,10 @@ static int	ft_sleep(t_philosopher *philo)
 int		philo_circle(t_philosopher *philo, int *count)
 {
 	get_forks(philo);
-	if (philo->state == DEAD)
-		return (SUCCESS);
+	// if (*philo->is_over == philo->nb_philo)
+	// 	return (SUCCESS);
 	ft_eat(philo, count);
-	if (*count < philo->nb_philo_eat)
+	if (!philo->nb_philo_eat || *count < philo->nb_philo_eat)
 		ft_sleep(philo);
 	return (SUCCESS);
 }

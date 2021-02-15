@@ -36,6 +36,7 @@
 # define THINKING 1
 # define SLEEPING 2
 # define DEAD 3
+# define FULL 4
 
 typedef struct		s_list
 {

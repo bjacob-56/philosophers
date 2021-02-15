@@ -1,0 +1,12 @@
+Philo_one:
+    - pb de gestion de priorites apres un tour
+        ex : ./philo_one 5 130 40 40 2
+        2 prend la fourchette avant 3
+
+Philo_two:
+    - ./philo_two 6 100 40 40 4
+        mauvais exit du programe (infinite loop)
+
+Philo_three:
+    - ./philo_three 6 100 40 40 4
+        les philosophers meurent trop
