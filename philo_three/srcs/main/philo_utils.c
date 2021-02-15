@@ -14,15 +14,13 @@
 
 int		print_state(t_philosopher *philo, struct timeval tv, char *str)
 {
-	// pthread_mutex_lock(philo->print_mutex);
 	sem_wait(philo->print_sem);
 
-	if (!*(philo->is_over))
+	if (*philo->is_over < philo->nb_philo)
 		dprintf(1, "%d %d %s\n", get_relative_time(philo->start, tv), philo->number, str);
 
-	// pthread_mutex_unlock(philo->print_mutex);
 	sem_post(philo->print_sem);
-	
+
 	return (SUCCESS);
 }
 
@@ -44,16 +42,27 @@ int		check_dead(struct timeval tv, t_philosopher *philo)
 {
 	if (get_relative_time(philo->start, tv) - philo->time_last_meal > philo->t_die)
 	{
-		// pthread_mutex_lock(philo->print_mutex);
 		sem_wait(philo->print_sem);
 	
-		if (!*(philo->is_over))
+		if (*philo->is_over < philo->nb_philo)
 			printf("%d %d %s\n", get_relative_time(philo->start, tv), philo->number, "died");
-		*(philo->is_over) = 1;
-		philo->state = DEAD;		
-
-		// pthread_mutex_unlock(philo->print_mutex);
+		*(philo->is_over) = philo->nb_philo;
+		// philo->state = DEAD;		
 		sem_post(philo->print_sem);
+	}
+	return (SUCCESS);
+}
+
+int		check_all_philo_dead(t_game *game)
+{
+	int	i;
+	struct timeval	tv;
+
+	i = -1;
+	while (game->is_over < game->nb_philo && ++i < game->nb_philo)
+	{
+		gettimeofday(&tv, NULL);
+		check_dead(tv, (game->philo)[i]);
 	}
 	return (SUCCESS);
 }

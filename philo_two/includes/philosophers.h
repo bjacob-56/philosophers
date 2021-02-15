@@ -29,7 +29,7 @@
 # define F_NB_ARG -1
 # define F_MALLOC -2
 # define F_THREAD_CREATE -3
-# define F_THREAD_JOIN -4
+# define F_THREAD_DETACH -4
 # define F_SEM_CREATE -5
 
 # define EATING 0
@@ -93,15 +93,14 @@ int					print_state(t_philosopher *philo, struct timeval tv,
 int					get_relative_time(struct timeval start, struct timeval tv);
 int					get_time_since_start(t_philosopher *philo);
 int					check_dead(struct timeval tv, t_philosopher *philo);
+int		check_all_philo_dead(t_game *game); // new
 int		print_errno(void);	// new
 
 
 /*
 ** activity.c
 */
-int					philo_eat(t_philosopher *philo, int *count);
-int					philo_sleep(t_philosopher *philo);
-int					philo_think(t_philosopher *philo);
+int					philo_circle(t_philosopher *philo, int *count);
 
 /*
 ** nb_utils.c

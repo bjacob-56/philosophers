@@ -23,13 +23,13 @@ int	print_error(t_game *game, int error)
 	else
 	{
 		pthread_mutex_lock(&game->print_mutex);
-		if (game->is_over)
+		if (game->is_over == game->nb_philo)
 			return (SUCCESS);
 		if (error == F_THREAD_CREATE)
 			printf("The thread couldn't be created\n");
-		else if (error == F_THREAD_JOIN)
-			printf("The thread couldn't be joined\n");
-		game->is_over = 1;
+		else if (error == F_THREAD_DETACH)
+			printf("The thread couldn't be detached\n");
+		game->is_over = game->nb_philo;
 		pthread_mutex_unlock(&game->print_mutex);
 	}
 	return (FAILURE);

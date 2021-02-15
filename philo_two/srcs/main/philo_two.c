@@ -19,17 +19,9 @@ void	*launch_philo(void *ptr)
 
 	philo = (t_philosopher*)ptr;
 	count = 0;
-	while (!*(philo->is_over) && philo->state != DEAD &&
+	while (*philo->is_over < philo->nb_philo && philo->state != DEAD &&
 		(!philo->nb_philo_eat || count < philo->nb_philo_eat))
-	{
-		if (philo->state == THINKING)
-			philo_eat(philo, &count);
-		else if (philo->state == EATING)
-			philo_sleep(philo);
-		else if (philo->state == SLEEPING)
-			philo_think(philo);
-	}
-
+		philo_circle(philo, &count);
 	return (ptr);
 }
 
@@ -55,9 +47,10 @@ int	main(int argc, char **argv)
 			return (FAILURE);
 	i = -1;
 	while (++i < game.nb_philo)	// Bonne maniere de faire ?
-		if (pthread_join(((game.philo)[i])->thread, NULL)) // 2nd arg a ajuster ?
-			return (ft_error(&game, NULL, F_THREAD_JOIN));
-
+		if (pthread_detach(((game.philo)[i])->thread)) // 2nd arg a ajuster ?
+			return (ft_error(&game, NULL, F_THREAD_DETACH));
+	while (game.is_over < game.nb_philo)
+		check_all_philo_dead(&game);
 	sem_close(game.print_sem);
 	sem_close(game.fork_sem);
 	sem_close(game.place_sem);

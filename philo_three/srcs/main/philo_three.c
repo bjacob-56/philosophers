@@ -19,18 +19,11 @@ void	*launch_philo(void *ptr)
 
 	philo = (t_philosopher*)ptr;
 	count = 0;
-	while (!*(philo->is_over) && philo->state != DEAD &&
+	while (*philo->is_over < philo->nb_philo && philo->state != DEAD &&
 		(!philo->nb_philo_eat || count < philo->nb_philo_eat))
-	{
-		if (philo->state == THINKING)
-			philo_eat(philo, &count);
-		else if (philo->state == EATING)
-			philo_sleep(philo);
-		else if (philo->state == SLEEPING)
-			philo_think(philo);
-	}
+		philo_circle(philo, &count);
 	exit(SUCCESS);
-	return (ptr);
+	// return (ptr);
 }
 
 int	create_fork_philo(t_game *game, int i)
@@ -46,7 +39,7 @@ int	main(int argc, char **argv)
 	t_game	game;
 	int		i;
 	pid_t 	program;
-	int		status;
+	// int		status;
 	
 	if (catch_arg(&game, argc, argv) == FAILURE)
 		return (FAILURE);
@@ -62,10 +55,13 @@ int	main(int argc, char **argv)
 		else
 			game.tab_pid[i] = program;
 	}
+	while (game.is_over < game.nb_philo)
+		check_all_philo_dead(&game);
+
 ///		gestion a faire pour s'arreter avant mais pas trop tot
 	// i = -1;
 	// while (++i < game.nb_philo)
-		waitpid(-1, &status, 0);
+		// waitpid(-1, &status, 0);
 ///
 	i = -1;
 	while (++i < game.nb_philo)	// Bonne maniere de faire ?

@@ -49,6 +49,7 @@ static int	philosopher_init(t_game *game, int i)
 	philo->fork_sem = game->fork_sem;
 	philo->place_sem = game->place_sem;
 	philo->is_over = &game->is_over;
+	philo->nb_philo = game->nb_philo;
 	(game->philo)[i] = philo;
 	return (SUCCESS);
 }

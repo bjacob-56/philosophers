@@ -58,6 +58,7 @@ typedef struct		s_philosopher
 	sem_t			*fork_sem;
 	sem_t			*place_sem;
 	int				*is_over;
+	int				nb_philo;
 }					t_philosopher;
 
 typedef struct		s_game
@@ -91,13 +92,12 @@ int					print_state(t_philosopher *philo, struct timeval tv,
 int					get_relative_time(struct timeval start, struct timeval tv);
 int					get_time_since_start(t_philosopher *philo);
 int					check_dead(struct timeval tv, t_philosopher *philo);
+int		check_all_philo_dead(t_game *game); // new	
 
 /*
 ** activity.c
 */
-int					philo_eat(t_philosopher *philo, int *count);
-int					philo_sleep(t_philosopher *philo);
-int					philo_think(t_philosopher *philo);
+int					philo_circle(t_philosopher *philo, int *count);
 
 /*
 ** nb_utils.c

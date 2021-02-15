@@ -50,6 +50,7 @@ static int	philosopher_init(t_game *game, int i)
 	philo->print_mutex = &game->print_mutex;
 	philo->fork_mutex = &game->fork_mutex;
 	philo->is_over = &game->is_over;
+	philo->nb_philo = game->nb_philo;
 	(game->philo)[i] = philo;
 	return (SUCCESS);
 }
