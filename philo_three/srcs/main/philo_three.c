@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:35 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/13 17:55:26 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/16 14:10:24 by bjacob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	*launch_philo(void *ptr)
 
 	philo = (t_philosopher*)ptr;
 	count = 0;
-	while (*philo->is_over < philo->nb_philo && philo->state != DEAD &&
-		(!philo->nb_philo_eat || count < philo->nb_philo_eat))
+	while ((!philo->nb_philo_eat || count < philo->nb_philo_eat))
 		philo_circle(philo, &count);
 	exit(SUCCESS);
 	// return (ptr);
@@ -34,12 +33,23 @@ int	create_fork_philo(t_game *game, int i)
 	return (SUCCESS);
 }
 
+int	ft_kill_all_child(t_game *game)
+{
+	int i;
+
+	i = -1;
+	while (++i < game->nb_philo)
+		kill(game->tab_pid[i], SIGKILL);
+	return (SUCCESS);
+}
+
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
 	int		i;
 	pid_t 	program;
-	// int		status;
+	int		status;
 	
 	if (catch_arg(&game, argc, argv) == FAILURE)
 		return (FAILURE);
@@ -55,13 +65,15 @@ int	main(int argc, char **argv)
 		else
 			game.tab_pid[i] = program;
 	}
-	while (game.is_over < game.nb_philo)
-		check_all_philo_dead(&game);
 
 ///		gestion a faire pour s'arreter avant mais pas trop tot
-	// i = -1;
-	// while (++i < game.nb_philo)
-		// waitpid(-1, &status, 0);
+	i = -1;
+	while (++i < game.nb_philo)
+	{
+		waitpid(-1, &status, 0);
+		if (WEXITSTATUS(status) == DEAD)
+			ft_kill_all_child(&game);
+	}
 ///
 	i = -1;
 	while (++i < game.nb_philo)	// Bonne maniere de faire ?

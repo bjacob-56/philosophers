@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:19:16 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/13 16:19:28 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/16 16:03:39 by bjacob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	print_error(t_game *game, int error)
 			printf("The thread couldn't be created\n");
 		else if (error == F_THREAD_DETACH)
 			printf("The thread couldn't be detached\n");
+		else if (error == F_THREAD_JOIN)
+			printf("The thread couldn't be joined\n");
 		game->is_over = game->nb_philo;
 		pthread_mutex_unlock(&game->print_mutex);
 	}

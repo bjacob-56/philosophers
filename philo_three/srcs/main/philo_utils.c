@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:47 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/13 16:35:48 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/16 14:01:04 by bjacob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,8 @@ int		check_dead(struct timeval tv, t_philosopher *philo)
 		if (*philo->is_over < philo->nb_philo)
 			printf("%d %d %s\n", get_relative_time(philo->start, tv), philo->number, "died");
 		*(philo->is_over) = philo->nb_philo;
+		exit(DEAD);
 		sem_post(philo->print_sem);
-	}
-	return (SUCCESS);
-}
-
-int		check_all_philo_dead(t_game *game)
-{
-	int	i;
-	struct timeval	tv;
-
-	i = -1;
-	while (game->is_over < game->nb_philo && ++i < game->nb_philo)
-	{
-		gettimeofday(&tv, NULL);
-		if (!game->nb_philo_eat || ((game->philo)[i])->state != FULL)
-			check_dead(tv, (game->philo)[i]);
 	}
 	return (SUCCESS);
 }

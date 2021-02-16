@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:40 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/13 17:48:51 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/16 16:16:34 by bjacob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int		get_time_since_start(t_philosopher *philo)
 	struct timeval tv;
 
 	gettimeofday(&tv, NULL);
-	// check_dead(tv, philo);
 	return(get_relative_time(philo->start, tv));
 }
 
@@ -56,17 +55,20 @@ int		check_all_philo_dead(t_game *game)
 	int	i;
 	struct timeval	tv;
 
-	i = -1;
-	while (game->is_over < game->nb_philo && ++i < game->nb_philo)
+	while (game->is_over < game->nb_philo)
 	{
-		gettimeofday(&tv, NULL);
-		if (!game->nb_philo_eat || ((game->philo)[i])->state != FULL)
-			check_dead(tv, (game->philo)[i]);
+		i = -1;
+		while (++i < game->nb_philo && game->is_over < game->nb_philo)
+		{
+			gettimeofday(&tv, NULL);
+			if (!game->nb_philo_eat || ((game->philo)[i])->state != FULL)
+				check_dead(tv, (game->philo)[i]);
+		}
 	}
 	return (SUCCESS);
 }
 
-int		print_errno(void)
+int		print_errno(void)	// DEBUG
 {
 	dprintf(STDERR_FILENO, "errno: %s\n", strerror(errno));	// dprintf
 	return (FAILURE);

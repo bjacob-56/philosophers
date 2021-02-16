@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:25 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/13 17:49:57 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/16 16:24:18 by bjacob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ int	main(int argc, char **argv)
 		if (create_thread_philo(&game, i) == FAILURE)
 			return (FAILURE);
 	i = -1;
-	while (++i < game.nb_philo)	// Bonne maniere de faire ?
-		if (pthread_detach(((game.philo)[i])->thread)) // 2nd arg a ajuster ?
+	while (++i < game.nb_philo)
+		if (pthread_detach(((game.philo)[i])->thread))
 			return (ft_error(&game, NULL, F_THREAD_DETACH));
-	while (game.is_over < game.nb_philo)
-		check_all_philo_dead(&game);
+	check_all_philo_dead(&game);
+	i = -1;
+	while (++i < game.nb_philo)
+		pthread_join(((game.philo)[i])->thread, NULL); // 2nd arg a ajuster ?
 	sem_close(game.print_sem);
 	sem_close(game.fork_sem);
-	sem_close(game.place_sem);
-
 	return (free_all_ptr(&game));
 }

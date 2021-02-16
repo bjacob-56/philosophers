@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:12:44 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/13 16:12:56 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/16 16:05:58 by bjacob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # define F_MALLOC -2
 # define F_THREAD_CREATE -3
 # define F_THREAD_DETACH -4
-# define F_MUTEX_CREATE -5
+# define F_THREAD_JOIN -5
+# define F_MUTEX_CREATE -6
 
 # define EATING 0
 # define THINKING 1
@@ -44,6 +45,7 @@ typedef struct		s_fork
 {
 	int				number;
 	pthread_mutex_t mutex;
+	int				last_philo;
 }					t_fork;
 
 typedef struct		s_philosopher
@@ -61,7 +63,7 @@ typedef struct		s_philosopher
 	pthread_t		thread;
 	struct timeval	start;
 	pthread_mutex_t *print_mutex;
-	pthread_mutex_t *fork_mutex;
+	// pthread_mutex_t *fork_mutex;
 	int				*is_over;
 	int				nb_philo;
 }					t_philosopher;
@@ -78,7 +80,7 @@ typedef struct		s_game
 	t_list			*ptrs;
 	struct timeval	start;
 	pthread_mutex_t print_mutex;
-	pthread_mutex_t fork_mutex;
+	// pthread_mutex_t fork_mutex;
 	int				is_over;
 }					t_game;
 
@@ -122,6 +124,7 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				*add_lst_to_free(t_game *game, void *ptr);
 void				*malloc_lst(t_game *game, int size);
 int					free_all_ptr(t_game *game);
+// void	ft_exit(t_game *game);
 
 /*
 ** errors.c

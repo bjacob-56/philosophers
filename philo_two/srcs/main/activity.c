@@ -6,33 +6,31 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:36:54 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/13 17:49:11 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/16 15:17:26 by bjacob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
 
-
-/////////////////////////////////////////////////
 static int	get_forks(t_philosopher *philo)
 {
 	struct timeval tv;
 
-	sem_wait(philo->place_sem);
+	while (philo->number != *philo->next_philo_eat)
+		;
 	sem_wait(philo->fork_sem);
 
 	gettimeofday(&tv, NULL);
-	print_state(philo, tv, "has taken a fork right");
+	print_state(philo, tv, "has taken a fork");
 
 	sem_wait(philo->fork_sem);
 
-	sem_post(philo->place_sem);
+	*philo->next_philo_eat = (*philo->next_philo_eat % philo->nb_philo) + 1;
 
 	gettimeofday(&tv, NULL);
-	print_state(philo, tv, "has taken a fork left");
+	print_state(philo, tv, "has taken a fork");
 	return (SUCCESS);
 }
-/////////////////////////////////////////////////
 
 static int	ft_eat(t_philosopher *philo, int *count)
 {
@@ -40,18 +38,14 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	struct timeval	tv;
 
 	gettimeofday(&start_eat, NULL);
-	// check_dead(start_eat, philo);
-	// gettimeofday(&tv, NULL);
 	tv = start_eat;
 	if (*philo->is_over < philo->nb_philo)
 	{
 		print_state(philo, start_eat, "is_eating");
 		philo->time_last_meal = get_relative_time(philo->start, start_eat);
-		while (get_relative_time(start_eat, tv) < philo->t_eat && *philo->is_over < philo->nb_philo)
-		{
+		while (get_relative_time(start_eat, tv) < philo->t_eat &&
+				*philo->is_over < philo->nb_philo)
 			gettimeofday(&tv, NULL);
-			// check_dead(tv, philo);
-		}
 	}
 	sem_post(philo->fork_sem);
 	sem_post(philo->fork_sem);
@@ -73,19 +67,13 @@ static int		ft_sleep(t_philosopher *philo)
 	struct timeval	tv;
 
 	gettimeofday(&start_sleep, NULL);
-	// check_dead(start_sleep, philo);
-	// gettimeofday(&tv, NULL);
 	tv = start_sleep;
 	if (*philo->is_over < philo->nb_philo)
 	{
-		print_state(philo, start_sleep, "is sleeping");
-		while (get_relative_time(start_sleep, tv) < philo->t_sleep && *philo->is_over < philo->nb_philo)
-		{
+		while (get_relative_time(start_sleep, tv) < philo->t_sleep &&
+				*philo->is_over < philo->nb_philo)
 			gettimeofday(&tv, NULL);
-			// check_dead(tv, philo);
-		}
 	}
-	// check_dead(tv, philo);
 	if (*philo->is_over < philo->nb_philo)
 		print_state(philo, tv, "is thinking");
 	return (SUCCESS);
@@ -94,8 +82,6 @@ static int		ft_sleep(t_philosopher *philo)
 int		philo_circle(t_philosopher *philo, int *count)
 {
 	get_forks(philo);
-	// if (*philo->is_over < philo->nb_philo)
-	// 	return (SUCCESS);
 	ft_eat(philo, count);
 	if (!philo->nb_philo_eat || *count < philo->nb_philo_eat)
 		ft_sleep(philo);

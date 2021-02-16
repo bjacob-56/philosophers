@@ -1,49 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_objects.c                                    :+:      :+:    :+:   */
+/*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/13 16:18:44 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 15:15:06 by bjacob           ###   ########.fr       */
+/*   Created: 2021/02/16 13:22:10 by bjacob            #+#    #+#             */
+/*   Updated: 2021/02/16 13:41:37 by bjacob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
 
-void	*add_lst_to_free(t_game *game, void *ptr)
-{
-	t_list	*elem;
 
-	if (!(elem = ft_lstnew(ptr)))
-	{
-		free(ptr);
-		return (NULL);
-	}
-	if (!(game->ptrs))
-		game->ptrs = elem;
-	else
-		ft_lstadd_back(&game->ptrs, elem);
-	return (ptr);
+int	ft_strlen(char *str)
+{
+	int	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
 }
 
-void	*malloc_lst(t_game *game, int size)
+char *create_fork_name(t_game *game, char *str, int number)
 {
-	void	*ptr;
+	char    *name;
+    char    *nbr;
+	int i;
+	int j;
 
-	if (!(ptr = malloc(size)))
+	if (!(nbr = ft_itoa(number)))
 		return (NULL);
-	if (!add_lst_to_free(game, ptr))
+	if (!(name = malloc_lst(game, ft_strlen(str) + ft_strlen(nbr) + 1)))
 	{
-		free(ptr);
+		free (nbr);
 		return (NULL);
 	}
-	return (ptr);
-}
-
-int		free_all_ptr(t_game *game)
-{
-	ft_lstclear(&game->ptrs, free);
-	return (SUCCESS);
+	i = 0;
+	j = 0;
+	while (str[i])
+		name[j++] = str[i++];
+	i = 0;
+	while (nbr[i])
+		name[j++] = nbr[i++];
+	name[j] = 0;
+	return (name);
 }

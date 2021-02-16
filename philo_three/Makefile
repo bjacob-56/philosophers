@@ -4,7 +4,7 @@ OBJ_DIR	:= obj/
 OBJ_DIRS = $(addprefix $(OBJ_DIR), main clear utils)
 
 PRE_SRCS =	main/philo_three main/init_philo_three main/activity main/philo_utils \
-			utils/lst_utils utils/nb_utils \
+			utils/lst_utils utils/nb_utils utils/str_utils \
 			clear/errors clear/clear_objects
 
 

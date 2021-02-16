@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:16:32 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/13 17:31:07 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/16 16:17:49 by bjacob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
 # define F_MALLOC -2
 # define F_THREAD_CREATE -3
 # define F_THREAD_DETACH -4
-# define F_SEM_CREATE -5
+# define F_THREAD_JOIN -5
+# define F_SEM_CREATE -6
 
 # define EATING 0
 # define THINKING 1
@@ -58,7 +59,7 @@ typedef struct		s_philosopher
 	struct timeval	start;
 	sem_t			*print_sem;
 	sem_t			*fork_sem;
-	sem_t			*place_sem;
+	int				*next_philo_eat;
 	int				*is_over;
 	int				nb_philo;
 }					t_philosopher;
@@ -75,7 +76,7 @@ typedef struct		s_game
 	struct timeval	start;
 	sem_t			*print_sem;
 	sem_t			*fork_sem;
-	sem_t			*place_sem;
+	int				next_philo_eat;
 	int				is_over;
 }					t_game;
 

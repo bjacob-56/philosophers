@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:13:31 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/13 16:15:31 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/16 13:39:52 by bjacob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+typedef struct		s_fork
+{
+	int				number;
+	sem_t			*private_fork_sem;
+}					t_fork;
+
 typedef struct		s_philosopher
 {
 	int				number;
@@ -58,6 +64,8 @@ typedef struct		s_philosopher
 	sem_t			*print_sem;
 	sem_t			*fork_sem;
 	sem_t			*place_sem;
+	t_fork			**fork;
+	int				*next_philo_eat;
 	int				*is_over;
 	int				nb_philo;
 }					t_philosopher;
@@ -70,17 +78,19 @@ typedef struct		s_game
 	int				t_sleep;
 	int				nb_philo_eat;
 	t_philosopher	**philo;
+	t_fork			**fork;
 	t_list			*ptrs;
 	struct timeval	start;
 	sem_t			*print_sem;
 	sem_t			*fork_sem;
 	sem_t			*place_sem;
+	int				next_philo_eat;
 	int				is_over;
 	pid_t			*tab_pid;
 }					t_game;
 
 /*
-** init_philo_one.c
+** init_philo_three.c
 */
 int					catch_arg(t_game *game, int argc, char **argv);
 int					game_init(t_game *game);
@@ -104,6 +114,12 @@ int					philo_circle(t_philosopher *philo, int *count);
 ** nb_utils.c
 */
 int					ft_atoi(char *str);
+char		*ft_itoa(int n);
+
+/*
+** str_utils.c
+*/
+char *create_fork_name(t_game *game, char *str, int number);
 
 /*
 ** lst_utils.c

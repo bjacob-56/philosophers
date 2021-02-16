@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:32:21 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/13 16:32:22 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/16 15:27:54 by bjacob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	philosopher_init(t_game *game, int i)
 	philo->fork_r = (game->fork)[(i + 1) % game->nb_philo];
 	philo->start = game->start;
 	philo->print_mutex = &game->print_mutex;
-	philo->fork_mutex = &game->fork_mutex;
+	// philo->fork_mutex = &game->fork_mutex;
 	philo->is_over = &game->is_over;
 	philo->nb_philo = game->nb_philo;
 	(game->philo)[i] = philo;
@@ -64,6 +64,7 @@ static int	fork_init(t_game *game, int i)
 	fork->number = i + 1;
 	if (pthread_mutex_init(&fork->mutex, NULL))
 		return (ft_error(game, NULL, F_MUTEX_CREATE));
+	fork->last_philo = -1;
 	(game->fork)[i] = fork;
 	return (SUCCESS);
 }
@@ -81,8 +82,8 @@ int			game_init(t_game *game)
 
 	if (pthread_mutex_init(&game->print_mutex, NULL))
 		return (ft_error(game, NULL, F_MUTEX_CREATE));
-	if (pthread_mutex_init(&game->fork_mutex, NULL))
-		return (ft_error(game, NULL, F_MUTEX_CREATE));
+	// if (pthread_mutex_init(&game->fork_mutex, NULL))
+	// 	return (ft_error(game, NULL, F_MUTEX_CREATE));
 
 	i = -1;
 	while (++i < game->nb_philo)
@@ -93,8 +94,6 @@ int			game_init(t_game *game)
 	while (++i < game->nb_philo)
 		if (philosopher_init(game, i) == FAILURE)
 			return (FAILURE);
-
-// dprintf(1, "addr game mutex = %p\n", &game->print_mutex); ////////////////
 	
 	return (SUCCESS);
 }
