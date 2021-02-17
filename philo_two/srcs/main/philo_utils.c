@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:40 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 12:08:28 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 13:51:40 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	check_all_philo_dead(t_game *game)
 			sem_wait(game->print_sem);
 			if (!game->nb_philo_eat || ((game->philo)[i])->state != FULL)
 				check_dead(get_time(), (game->philo)[i]);
-			if (game->is_over < game->nb_philo)
-				sem_post(game->print_sem);
+			// if (game->is_over < game->nb_philo)
+			sem_post(game->print_sem);
 		}
 		usleep(100);
 	}

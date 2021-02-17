@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 12:04:05 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 12:04:06 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 13:43:47 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,22 @@ void	*malloc_lst(t_game *game, int size)
 	return (ptr);
 }
 
+int		clear_all_semaphores(t_game *game)
+{
+	sem_close(game->print_sem);
+	sem_close(game->fork_sem);
+	return (SUCCESS);
+}
+
 int		free_all_ptr(t_game *game)
 {
 	ft_lstclear(&game->ptrs, free);
 	return (SUCCESS);
+}
+
+void	ft_exit(t_game *game)
+{
+	clear_all_semaphores(game);
+	free_all_ptr(game);	
+	exit(SUCCESS);
 }

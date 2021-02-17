@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:35 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 12:20:32 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 15:14:55 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ void	launch_philo(t_philosopher *philo)
 	}
 	while ((!philo->game->nb_philo_eat || count < philo->game->nb_philo_eat))
 		philo_circle(philo, &count);
+
+dprintf(1, "exit id %d ----------------------------------------\n", philo->number);
+	// while (1)
+	// {
+	// 	philo->time_last_meal = get_time();
+	// 	usleep(1000);
+	// }
 	exit(SUCCESS);
 }
 
@@ -53,7 +60,7 @@ int		create_and_manage_childs(t_game *game)
 	while (++i < game->nb_philo)
 	{
 		if ((program = fork()) == -1)
-			return (ft_error(game, NULL, F_FORK_CREATE));
+			return (ft_error(game, NULL, F_FORK_CREATE, game->nb_philo));
 		if (!program)
 			launch_philo((game->philo)[i]);
 		else
@@ -62,7 +69,12 @@ int		create_and_manage_childs(t_game *game)
 	i = -1;
 	while (++i < game->nb_philo)
 	{
+
+dprintf(1, "waiting next child %d\n", i);
 		waitpid(-1, &status, 0);
+
+dprintf(1, "exit confirmed %d\n", i);
+
 		if (WEXITSTATUS(status) == DEAD)
 			ft_kill_all_child(game);
 	}
@@ -80,10 +92,7 @@ int		main(int argc, char **argv)
 		return (FAILURE);
 	if (game_init(&game) == FAILURE)
 		return (FAILURE);
-	game.start_time = get_time_void();
+	game.start_time = get_time();
 	create_and_manage_childs(&game);
-	sem_close(game.print_sem);
-	sem_close(game.fork_sem);
-	sem_close(game.place_sem);
-	return (free_all_ptr(&game));
+	ft_exit(&game);
 }

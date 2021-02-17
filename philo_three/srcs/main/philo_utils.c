@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:47 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 12:13:54 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 15:12:49 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 int		print_state(t_philosopher *philo, int time, char *str)
 {
+
+dprintf(1, "preprint - %d %d %s\n", time - philo->game->start_time, philo->number, str);
+
 	sem_wait(philo->game->print_sem);
 	printf("%d %d %s\n", time - philo->game->start_time, philo->number, str);
 	sem_post(philo->game->print_sem);
 	return (SUCCESS);
 }
 
-int		get_time_void(void)
+int		get_time(void)
 {
 	struct timeval	tv;
 
@@ -32,7 +35,7 @@ int		check_dead(int time, t_philosopher *philo)
 {
 	if (time - philo->time_last_meal > philo->game->t_die)
 	{
-		printf("%d %d %s\n", get_time_void() - philo->game->start_time,
+		printf("%d %d %s\n", get_time() - philo->game->start_time,
 				philo->number, "died");
 		exit(DEAD);
 	}
@@ -47,7 +50,7 @@ void	*check_dead_philo_background(void *ptr)
 	while (1)
 	{
 		sem_wait(philo->game->print_sem);
-		check_dead(get_time_void(), philo);
+		check_dead(get_time(), philo);
 		sem_post(philo->game->print_sem);
 		usleep(100);
 	}

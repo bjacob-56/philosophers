@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:16:32 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 12:05:21 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 14:00:09 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,9 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 */
 void				*add_lst_to_free(t_game *game, void *ptr);
 void				*malloc_lst(t_game *game, int size);
+int					clear_all_semaphores(t_game *game);
 int					free_all_ptr(t_game *game);
+void				ft_exit(t_game *game);
 
 /*
 ** errors.c

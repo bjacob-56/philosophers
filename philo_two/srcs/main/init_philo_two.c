@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:09 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 12:07:51 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 15:17:09 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,19 @@ int			game_init(t_game *game)
 	game->next_philo_eat = 1;
 	game->is_over = 0;
 	game->ptrs = NULL;
+	game->print_sem = NULL;
+	game->fork_sem = NULL;
 	if (!(game->philo = malloc_lst(game,
 								sizeof(t_philosopher*) * game->nb_philo)))
 		return (ft_error(game, NULL, F_MALLOC));
+	sem_unlink("/print_sem");
 	game->print_sem = sem_open("/print_sem", O_CREAT, S_IRWXU, 1);
 	if (game->print_sem == SEM_FAILED)
 		return (ft_error(game, NULL, F_SEM_CREATE));
+	sem_unlink("/fork_sem");
 	game->fork_sem = sem_open("/fork_sem", O_CREAT, S_IRWXU, game->nb_philo);
 	if (game->fork_sem == SEM_FAILED)
 		return (ft_error(game, NULL, F_SEM_CREATE));
-	sem_unlink("/print_sem");
-	sem_unlink("/fork_sem");
-	sem_unlink("/place_sem");
 	i = -1;
 	while (++i < game->nb_philo)
 		if (philosopher_init(game, i) == FAILURE)

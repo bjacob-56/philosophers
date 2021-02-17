@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:12:44 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 11:57:48 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 14:06:17 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,14 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				*add_lst_to_free(t_game *game, void *ptr);
 void				*malloc_lst(t_game *game, int size);
 int					free_all_ptr(t_game *game);
-int					clear_all_mutex(t_game *game);
+int					clear_all_mutex(t_game *game, int nb_fork_created);
+void				ft_exit(t_game *game);
 
 /*
 ** errors.c
 */
 int					print_error(t_game *game, int error);
-int					ft_error(t_game *game, void *ptr, int error);
+int					ft_error(t_game *game, void *ptr, int error,
+							int nb_fork_created);
 
 #endif

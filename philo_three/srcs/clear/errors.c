@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:25:40 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 08:23:50 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 14:14:11 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int	print_error(sem_t *print_sem, int error) // a reprendre
 	return (FAILURE);
 }
 
-int	ft_error(t_game *game, void *ptr, int error)
+int	ft_error(t_game *game, void *ptr, int error, int nb_fork_created)
 {
 	free(ptr);
+	clear_all_semaphores(game, nb_fork_created);
 	free_all_ptr(game);
 	print_error(game->print_sem, error);
 	return (FAILURE);

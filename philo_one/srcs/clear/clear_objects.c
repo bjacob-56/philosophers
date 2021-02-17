@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 11:54:18 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 11:54:43 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 14:05:08 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	*malloc_lst(t_game *game, int size)
 	return (ptr);
 }
 
-int		clear_all_mutex(t_game *game)
+int		clear_all_mutex(t_game *game, int nb_fork_created)
 {
 	int	i;
 
 	pthread_mutex_destroy(&game->print_mutex);
 	i = -1;
-	while (++i < game->nb_philo)
+	while (++i < nb_fork_created)
 		pthread_mutex_destroy(&game->fork[i]->mutex);
 	return (SUCCESS);
 }
@@ -61,7 +61,7 @@ int		free_all_ptr(t_game *game)
 
 void	ft_exit(t_game *game)
 {
+	clear_all_mutex(game, game->nb_philo);
 	free_all_ptr(game);
-	clear_all_mutex(game);
 	exit(SUCCESS);
 }

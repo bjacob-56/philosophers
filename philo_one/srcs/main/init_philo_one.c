@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:32:21 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 12:02:52 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 14:08:32 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	philosopher_init(t_game *game, int i)
 	t_philosopher	*philo;
 
 	if (!(philo = malloc_lst(game, sizeof(t_philosopher))))
-		return (ft_error(game, NULL, F_MALLOC));
+		return (ft_error(game, NULL, F_MALLOC, game->nb_philo));
 	philo->number = i + 1;
 	philo->state = THINKING;
 	philo->time_last_meal = 0;
@@ -48,10 +48,10 @@ static int	fork_init(t_game *game, int i)
 	t_fork	*fork;
 
 	if (!(fork = malloc_lst(game, sizeof(t_fork))))
-		return (ft_error(game, NULL, F_MALLOC));
+		return (ft_error(game, NULL, F_MALLOC, i));
 	fork->number = i + 1;
 	if (pthread_mutex_init(&fork->mutex, NULL))
-		return (ft_error(game, NULL, F_MUTEX_CREATE));
+		return (ft_error(game, NULL, F_MUTEX_CREATE, i));
 	fork->last_philo = -1;
 	(game->fork)[i] = fork;
 	return (SUCCESS);
@@ -65,11 +65,11 @@ int			game_init(t_game *game)
 	game->ptrs = NULL;
 	if (!(game->philo = malloc_lst(game,
 								sizeof(t_philosopher*) * game->nb_philo)))
-		return (ft_error(game, NULL, F_MALLOC));
+		return (ft_error(game, NULL, F_MALLOC, 0));
 	if (!(game->fork = malloc_lst(game, sizeof(t_fork*) * game->nb_philo)))
-		return (ft_error(game, NULL, F_MALLOC));
+		return (ft_error(game, NULL, F_MALLOC, 0));
 	if (pthread_mutex_init(&game->print_mutex, NULL))
-		return (ft_error(game, NULL, F_MUTEX_CREATE));
+		return (ft_error(game, NULL, F_MUTEX_CREATE, 0));
 	i = -1;
 	while (++i < game->nb_philo)
 		if (fork_init(game, i) == FAILURE)
