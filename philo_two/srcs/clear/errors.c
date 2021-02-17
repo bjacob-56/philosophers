@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 12:04:12 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 14:01:32 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 16:37:55 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	print_error(t_game *game, int error)
 int	ft_error(t_game *game, void *ptr, int error)
 {
 	free(ptr);
+	print_error(game, error);
 	clear_all_semaphores(game);
 	free_all_ptr(game);
-	print_error(game, error);
 	exit(FAILURE);
 }

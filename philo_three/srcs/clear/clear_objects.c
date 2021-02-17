@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:18:44 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:08:21 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 16:23:16 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ int		free_all_ptr(t_game *game)
 void	ft_exit(t_game *game)
 {
 	clear_all_semaphores(game, game->nb_philo);
-	free_all_ptr(game);	
+	free_all_ptr(game);
 	exit(SUCCESS);
 }

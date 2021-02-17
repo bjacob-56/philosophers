@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 13:25:00 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 16:23:59 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ char	*create_fork_name(t_game *game, char *str, int number)
 	while (nbr[i])
 		name[j++] = nbr[i++];
 	name[j] = 0;
-	free (nbr);
+	free(nbr);
 	return (name);
 }

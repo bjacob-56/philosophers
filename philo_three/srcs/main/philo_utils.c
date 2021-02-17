@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:47 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:49:12 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 16:52:36 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int		print_state(t_philosopher *philo, char *str)
 {
+
+
+	
 	sem_wait(philo->game->print_sem);
 	printf("%d %d %s\n", get_time() - philo->game->start_time,
 			philo->number, str);
@@ -29,19 +32,23 @@ int		get_time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-int		check_dead(int time, t_philosopher *philo)
+void	inc_sem_end(t_game *game)
 {
 	int i;
 	
+	i = -1;
+	while (++i < game->nb_philo)
+		sem_post(game->end_sem);
+	sem_wait(game->print_sem);
+}
+
+int		check_dead(int time, t_philosopher *philo)
+{
 	if (time - philo->time_last_meal > philo->game->t_die)
 	{
 		printf("%d %d %s\n", get_time() - philo->game->start_time,
-				philo->number, "died");		
-		i = -1;
-		while (++i < philo->game->nb_philo)
-			sem_post(philo->game->end_sem);
-		sem_wait(philo->game->print_sem);
-
+				philo->number, "died");
+		inc_sem_end(philo->game);
 	}
 	return (SUCCESS);
 }

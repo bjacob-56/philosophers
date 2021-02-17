@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:09 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:17:09 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 16:59:18 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int			catch_arg(t_game *game, int argc, char **argv)
 {
 	if (argc < 5 || argc > 6)
-		return (print_error(game, F_NB_ARG));
+		return (print_error(NULL, F_NB_ARG));
 	game->nb_philo = ft_atoi(argv[1]);
 	game->t_die = ft_atoi(argv[2]);
 	game->t_eat = ft_atoi(argv[3]);

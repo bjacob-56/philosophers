@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 11:54:52 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 14:06:21 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 16:37:38 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	print_error(t_game *game, int error)
 int	ft_error(t_game *game, void *ptr, int error, int nb_fork_created)
 {
 	free(ptr);
+	print_error(game, error);
 	clear_all_mutex(game, nb_fork_created);
 	free_all_ptr(game);
-	print_error(game, error);
 	return (FAILURE);
 }

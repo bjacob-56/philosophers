@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:35 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:35:00 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 16:35:34 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	launch_philo(t_philosopher *philo)
 					&check_dead_philo_background, (void*)philo))
 	{
 		print_error(philo->game->print_sem, F_THREAD_CREATE);
-		exit(DEAD);
+		inc_sem_end(philo->game);
 	}
 	if (pthread_detach(((philo->thread))))
 	{
 		print_error(philo->game->print_sem, F_THREAD_DETACH);
-		exit(DEAD);
+		inc_sem_end(philo->game);
 	}
 	while ((!philo->game->nb_philo_eat || count < philo->game->nb_philo_eat))
 		philo_circle(philo, &count);
@@ -34,7 +34,7 @@ void	launch_philo(t_philosopher *philo)
 	while (1)
 	{
 		philo->time_last_meal = get_time();
-		usleep(1000);
+		usleep(1000 * philo->game->t_eat / 2);
 	}
 }
 
@@ -68,7 +68,7 @@ int		create_and_manage_childs(t_game *game)
 		sem_wait(game->end_sem);
 	i = -1;
 	while (++i < game->nb_philo)
-		kill(game->tab_pid[i], SIGKILL);
+		kill(game->tab_pid[i], SIGTERM);
 	return (SUCCESS);
 }
 

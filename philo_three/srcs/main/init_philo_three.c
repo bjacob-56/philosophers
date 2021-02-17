@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:19 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:36:42 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 16:24:17 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	fork_init(t_game *game, int i)
 	fork->number = i + 1;
 	if (!(fork_name = create_fork_name(game, "/fork_sem", i)))
 		return (ft_error(game, NULL, F_MALLOC, i));
-	sem_unlink(fork_name);	//
+	sem_unlink(fork_name);
 	fork->private_fork_sem = sem_open(fork_name, O_CREAT, S_IRWXU, 0);
 	if (fork->private_fork_sem == SEM_FAILED)
 		return (ft_error(game, NULL, F_SEM_CREATE, i));
@@ -91,7 +91,7 @@ int			game_init(t_game *game)
 	if (!(game->fork = malloc_lst(game, sizeof(t_fork*) * game->nb_philo)))
 		return (ft_error(game, NULL, F_MALLOC, 0));
 	if (!(game->tab_pid = malloc_lst(game, sizeof(pid_t) * game->nb_philo)))
-		return (ft_error(game, NULL, F_MALLOC, 0));		
+		return (ft_error(game, NULL, F_MALLOC, 0));
 	if (create_semaphores(game) == FAILURE)
 		return (FAILURE);
 	i = -1;

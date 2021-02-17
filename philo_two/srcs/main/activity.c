@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:36:54 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:52:45 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 16:07:35 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	time = start_eat;
 	if (philo->game->is_over < philo->game->nb_philo)
 	{
-		print_state(philo, "is_eating");
 		philo->time_last_meal = start_eat;
+		print_state(philo, "is_eating");
 		while (time - start_eat < philo->game->t_eat &&
 				philo->game->is_over < philo->game->nb_philo)
 			time = get_time();

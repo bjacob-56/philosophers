@@ -15,9 +15,9 @@ NAME = philo_three
 
 CC = clang
 RM = rm -f
-# CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 THFLAGS = -lpthread -D_REENTRANT
-CFLAGS = -Wall -Wextra -Werror -g
+# CFLAGS = -Wall -Wextra -Werror -g
 INC =	-I./includes 
 
 all:	$(NAME)

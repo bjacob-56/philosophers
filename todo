@@ -1,6 +1,5 @@
 Philo_one:
     - Pourquoi "=================================================================" ?
-    - Porbleme de saut de ms --> faute du mac ?
 
 Philo_two:
     - Pourquoi "=================================================================" ?
@@ -18,4 +17,4 @@ Philo_three:
 Global:
     - valeur limite autorisees a verifier
     - leaks
-    
+    - test avec 2 philosophes

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:13:31 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:49:48 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 16:29:19 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int					game_init(t_game *game);
 /*
 ** philo_utils.c
 */
+void				inc_sem_end(t_game *game);
 int					print_state(t_philosopher *philo, char *str);
 int					get_time(void);
 void				*check_dead_philo_background(void *ptr);

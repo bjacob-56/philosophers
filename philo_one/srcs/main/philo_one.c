@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:32:49 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:39:49 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 16:49:08 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int		create_thread_philo(t_game *game, int i)
 {
 	if (pthread_create(&((game->philo)[i])->thread, NULL,
 						&launch_philo, (void*)((game->philo)[i])))
-		return (ft_error(game, NULL, F_THREAD_CREATE, game->nb_philo));
+	{
+		game->is_over = game->nb_philo;
+		return (print_error(game, F_THREAD_CREATE));
+	}
 	return (SUCCESS);
 }
 
@@ -45,8 +48,7 @@ int		main(int argc, char **argv)
 	i = -1;
 	game.start_time = get_time();
 	while (++i < game.nb_philo)
-		if (create_thread_philo(&game, i) == FAILURE)
-			return (FAILURE);
+		create_thread_philo(&game, i);
 	check_all_philo_dead(&game);
 	i = -1;
 	while (++i < game.nb_philo)
