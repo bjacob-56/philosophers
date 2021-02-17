@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:25:40 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 16:38:10 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 17:43:48 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	print_error(sem_t *print_sem, int error)
 			printf("The thread couldn't be created\n");
 		else if (error == F_THREAD_DETACH)
 			printf("The thread couldn't be detached\n");
+		else if (error == F_CHILD_KILLED)
+			printf("A child process has ended\n");
 		sem_post(print_sem);
 	}
 	return (FAILURE);

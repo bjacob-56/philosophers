@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:13:31 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 16:29:19 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 17:43:12 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define F_SEM_CREATE -4
 # define F_THREAD_CREATE -5
 # define F_THREAD_DETACH -6
+# define F_CHILD_KILLED -7
 
 # define EATING 0
 # define THINKING 1
@@ -78,13 +79,26 @@ typedef struct		s_game
 	sem_t			*end_sem;
 	int				next_philo_eat;
 	pid_t			*tab_pid;
+	// pthread_t		thread_childs;
 }					t_game;
+
+/*
+** philo_three.c
+*/
+void	launch_philo(t_philosopher *philo);
 
 /*
 ** init_philo_three.c
 */
 int					catch_arg(t_game *game, int argc, char **argv);
 int					game_init(t_game *game);
+
+/*
+** childs.c
+*/
+int		create_childs(t_game *game);
+int		manage_childs(t_game *game);
+
 
 /*
 ** philo_utils.c

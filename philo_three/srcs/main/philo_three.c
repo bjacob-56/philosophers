@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:35 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 16:35:34 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 17:23:00 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,6 @@ int		ft_kill_all_child(t_game *game)
 	return (SUCCESS);
 }
 
-int		create_and_manage_childs(t_game *game)
-{
-	int		i;
-	pid_t	program;
-
-	i = -1;
-	while (++i < game->nb_philo)
-	{
-		if ((program = fork()) == -1)
-			return (ft_error(game, NULL, F_FORK_CREATE, game->nb_philo));
-		if (!program)
-			launch_philo((game->philo)[i]);
-		else
-			game->tab_pid[i] = program;
-	}
-	i = -1;
-	while (++i < game->nb_philo)
-		sem_wait(game->end_sem);
-	i = -1;
-	while (++i < game->nb_philo)
-		kill(game->tab_pid[i], SIGTERM);
-	return (SUCCESS);
-}
-
 int		main(int argc, char **argv)
 {
 	t_game	game;
@@ -81,6 +57,7 @@ int		main(int argc, char **argv)
 	if (game_init(&game) == FAILURE)
 		return (FAILURE);
 	game.start_time = get_time();
-	create_and_manage_childs(&game);
+	create_childs(&game);
+	manage_childs(&game);
 	ft_exit(&game);
 }
