@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 12:04:05 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 13:43:47 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 15:38:53 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ int		free_all_ptr(t_game *game)
 void	ft_exit(t_game *game)
 {
 	clear_all_semaphores(game);
-	free_all_ptr(game);	
+	free_all_ptr(game);
 	exit(SUCCESS);
 }

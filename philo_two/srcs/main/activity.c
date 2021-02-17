@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:36:54 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 12:06:28 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 15:52:45 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static int	get_forks(t_philosopher *philo)
 		;
 	sem_wait(philo->game->fork_sem);
 	time = get_time();
-	print_state(philo, time, "has taken a fork");
+	print_state(philo, "has taken a fork");
 	sem_wait(philo->game->fork_sem);
 	philo->game->next_philo_eat =
 				(philo->game->next_philo_eat % philo->game->nb_philo) + 1;
 	time = get_time();
-	print_state(philo, time, "has taken a fork");
+	print_state(philo, "has taken a fork");
 	return (SUCCESS);
 }
 
@@ -38,7 +38,7 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	time = start_eat;
 	if (philo->game->is_over < philo->game->nb_philo)
 	{
-		print_state(philo, start_eat, "is_eating");
+		print_state(philo, "is_eating");
 		philo->time_last_meal = start_eat;
 		while (time - start_eat < philo->game->t_eat &&
 				philo->game->is_over < philo->game->nb_philo)
@@ -49,10 +49,10 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	(*count)++;
 	if (philo->game->is_over < philo->game->nb_philo &&
 		(*count < philo->game->nb_philo_eat || !philo->game->nb_philo_eat))
-		print_state(philo, time, "is sleeping");
+		print_state(philo, "is sleeping");
 	if (philo->game->is_over < philo->game->nb_philo &&
 		*count == philo->game->nb_philo_eat)
-		print_state_full(philo, time);
+		print_state_full(philo);
 	return (SUCCESS);
 }
 
@@ -70,7 +70,7 @@ static int	ft_sleep(t_philosopher *philo)
 			time = get_time();
 	}
 	if (philo->game->is_over < philo->game->nb_philo)
-		print_state(philo, time, "is thinking");
+		print_state(philo, "is thinking");
 	return (SUCCESS);
 }
 

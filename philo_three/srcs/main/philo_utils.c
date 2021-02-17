@@ -6,16 +6,17 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:47 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:35:36 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 15:49:12 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
 
-int		print_state(t_philosopher *philo, int time, char *str)
+int		print_state(t_philosopher *philo, char *str)
 {
 	sem_wait(philo->game->print_sem);
-	printf("%d %d %s\n", time - philo->game->start_time, philo->number, str);
+	printf("%d %d %s\n", get_time() - philo->game->start_time,
+			philo->number, str);
 	sem_post(philo->game->print_sem);
 	return (SUCCESS);
 }

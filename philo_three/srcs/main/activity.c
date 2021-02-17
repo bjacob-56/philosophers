@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:06 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:12:49 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 15:51:15 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	get_one_fork(t_philosopher *philo)
 
 	sem_wait(philo->game->fork_sem);
 	time = get_time();
-	print_state(philo, time, "has taken a fork");
+	print_state(philo, "has taken a fork");
 	return (SUCCESS);
 }
 
@@ -39,7 +39,7 @@ static int	ft_eat(t_philosopher *philo, int *count)
 
 	start_eat = get_time();
 	time = start_eat;
-	print_state(philo, start_eat, "is eating");
+	print_state(philo, "is eating");
 	philo->time_last_meal = start_eat;
 	while (time - start_eat < philo->game->t_eat)
 		time = get_time();
@@ -47,9 +47,9 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	sem_post(philo->game->fork_sem);
 	(*count)++;
 	if (*count < philo->game->nb_philo_eat || !philo->game->nb_philo_eat)
-		print_state(philo, time, "is sleeping");
+		print_state(philo, "is sleeping");
 	else if (*count == philo->game->nb_philo_eat)
-		print_state(philo, time, "is full");
+		print_state(philo, "is full");
 	return (SUCCESS);
 }
 
@@ -64,7 +64,7 @@ static int	ft_sleep(t_philosopher *philo, int *count)
 	{
 		while (time - start_sleep < philo->game->t_sleep)
 			time = get_time();
-		print_state(philo, time, "is thinking");
+		print_state(philo, "is thinking");
 	}
 	return (SUCCESS);
 }

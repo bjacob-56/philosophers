@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:13:31 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:27:16 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 15:49:48 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ int					game_init(t_game *game);
 /*
 ** philo_utils.c
 */
-int					print_state(t_philosopher *philo, int time, char *str);
-int					get_relative_time(struct timeval start, struct timeval tv);
+int					print_state(t_philosopher *philo, char *str);
 int					get_time(void);
 void				*check_dead_philo_background(void *ptr);
 
