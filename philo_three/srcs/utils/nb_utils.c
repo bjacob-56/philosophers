@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/13 16:22:17 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 13:22:42 by bjacob           ###   ########.fr       */
+/*   Created: 2021/02/17 12:24:52 by bjacob            #+#    #+#             */
+/*   Updated: 2021/02/17 12:25:03 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
 
-int	ft_atoi(char *str)
+int			ft_atoi(char *str)
 {
 	int	res;
 

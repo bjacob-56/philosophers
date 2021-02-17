@@ -5,15 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/16 13:22:10 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 13:41:37 by bjacob           ###   ########.fr       */
+/*   Created: 2021/02/17 12:23:42 by bjacob            #+#    #+#             */
+/*   Updated: 2021/02/17 12:24:43 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
 
-
-int	ft_strlen(char *str)
+int		ft_strlen(char *str)
 {
 	int	len;
 
@@ -23,18 +22,18 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
-char *create_fork_name(t_game *game, char *str, int number)
+char	*create_fork_name(t_game *game, char *str, int number)
 {
-	char    *name;
-    char    *nbr;
-	int i;
-	int j;
+	char	*name;
+	char	*nbr;
+	int		i;
+	int		j;
 
 	if (!(nbr = ft_itoa(number)))
 		return (NULL);
 	if (!(name = malloc_lst(game, ft_strlen(str) + ft_strlen(nbr) + 1)))
 	{
-		free (nbr);
+		free(nbr);
 		return (NULL);
 	}
 	i = 0;

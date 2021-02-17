@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/13 16:18:44 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 16:13:37 by bjacob           ###   ########.fr       */
+/*   Created: 2021/02/17 11:54:18 by bjacob            #+#    #+#             */
+/*   Updated: 2021/02/17 11:54:43 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ void	*malloc_lst(t_game *game, int size)
 
 int		clear_all_mutex(t_game *game)
 {
-	int 	i;
+	int	i;
 
 	pthread_mutex_destroy(&game->print_mutex);
 	i = -1;
 	while (++i < game->nb_philo)
-		pthread_mutex_destroy(&game->fork[i]->mutex);	
+		pthread_mutex_destroy(&game->fork[i]->mutex);
 	return (SUCCESS);
 }
 
@@ -63,5 +63,5 @@ void	ft_exit(t_game *game)
 {
 	free_all_ptr(game);
 	clear_all_mutex(game);
-	exit (SUCCESS);
+	exit(SUCCESS);
 }

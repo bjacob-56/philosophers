@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:18:44 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/13 16:21:15 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 12:12:14 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,5 @@ void	*malloc_lst(t_game *game, int size)
 int		free_all_ptr(t_game *game)
 {
 	ft_lstclear(&game->ptrs, free);
-// int pthread_mutex_destroy(pthread_mutex_t *mutex);
 	return (SUCCESS);
 }

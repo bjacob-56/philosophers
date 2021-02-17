@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:09 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 10:44:19 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 12:07:51 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	philosopher_init(t_game *game, int i)
 	philo->number = i + 1;
 	philo->state = THINKING;
 	philo->time_last_meal = 0;
-	philo->time_start_sleep = 0;	
+	philo->time_start_sleep = 0;
 	philo->game = game;
 	(game->philo)[i] = philo;
 	return (SUCCESS);
@@ -48,24 +48,21 @@ int			game_init(t_game *game)
 	game->next_philo_eat = 1;
 	game->is_over = 0;
 	game->ptrs = NULL;
-	if (!(game->philo = malloc_lst(game, sizeof(t_philosopher*) * game->nb_philo)))
+	if (!(game->philo = malloc_lst(game,
+								sizeof(t_philosopher*) * game->nb_philo)))
 		return (ft_error(game, NULL, F_MALLOC));
-
 	game->print_sem = sem_open("/print_sem", O_CREAT, S_IRWXU, 1);
 	if (game->print_sem == SEM_FAILED)
 		return (ft_error(game, NULL, F_SEM_CREATE));
 	game->fork_sem = sem_open("/fork_sem", O_CREAT, S_IRWXU, game->nb_philo);
 	if (game->fork_sem == SEM_FAILED)
 		return (ft_error(game, NULL, F_SEM_CREATE));
-
 	sem_unlink("/print_sem");
 	sem_unlink("/fork_sem");
 	sem_unlink("/place_sem");
-
 	i = -1;
 	while (++i < game->nb_philo)
 		if (philosopher_init(game, i) == FAILURE)
 			return (FAILURE);
-			
 	return (SUCCESS);
 }

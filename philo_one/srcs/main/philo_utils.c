@@ -6,42 +6,52 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:33:05 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 11:28:42 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 12:00:47 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
 
-int		print_state(t_philosopher *philo, int time, char *str)
+int	print_state_full(t_philosopher *philo, int time)
+{
+	print_state(philo, time, "is full");
+	philo->state = FULL;
+	philo->game->is_over++;
+	return (SUCCESS);
+}
+
+int	print_state(t_philosopher *philo, int time, char *str)
 {
 	if (philo->game->is_over < philo->game->nb_philo)
 	{
 		pthread_mutex_lock(&philo->game->print_mutex);
-		dprintf(1, "%d %d %s\n", time - philo->game->start_time, philo->number, str);
+		printf("%d %d %s\n", time - philo->game->start_time,
+				philo->number, str);
 		pthread_mutex_unlock(&philo->game->print_mutex);
 	}
 	return (SUCCESS);
 }
 
-int		get_time(void)
+int	get_time(void)
 {
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return(tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-int		check_dead(int time, t_philosopher *philo)
+int	check_dead(int time, t_philosopher *philo)
 {
 	if (time - philo->time_last_meal > philo->game->t_die)
 	{
-		printf("%d %d %s\n", get_time() - philo->game->start_time, philo->number, "died");
+		printf("%d %d %s\n", get_time() - philo->game->start_time,
+				philo->number, "died");
 		philo->game->is_over = philo->game->nb_philo;
 	}
 	return (SUCCESS);
 }
 
-int		check_all_philo_dead(t_game *game)
+int	check_all_philo_dead(t_game *game)
 {
 	int	i;
 

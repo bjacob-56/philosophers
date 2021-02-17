@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:13:31 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 10:08:42 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 12:11:53 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,11 @@ int					game_init(t_game *game);
 /*
 ** philo_utils.c
 */
-int		print_state(t_philosopher *philo, int time, char *str); // new
+int					print_state(t_philosopher *philo, int time, char *str);
 int					get_relative_time(struct timeval start, struct timeval tv);
-int		get_time(struct timeval tv);
-int		get_time_void(void);
-void	*check_dead_philo_background(void *ptr); // new
-
+int					get_time(struct timeval tv);
+int					get_time_void(void);
+void				*check_dead_philo_background(void *ptr);
 
 /*
 ** activity.c
@@ -105,12 +104,12 @@ int					philo_circle(t_philosopher *philo, int *count);
 ** nb_utils.c
 */
 int					ft_atoi(char *str);
-char		*ft_itoa(int n);
+char				*ft_itoa(int n);
 
 /*
 ** str_utils.c
 */
-char *create_fork_name(t_game *game, char *str, int number);
+char				*create_fork_name(t_game *game, char *str, int number);
 
 /*
 ** lst_utils.c
@@ -130,7 +129,7 @@ int					free_all_ptr(t_game *game);
 /*
 ** errors.c
 */
-int	print_error(sem_t *print_sem, int error);
+int					print_error(sem_t *print_sem, int error);
 int					ft_error(t_game *game, void *ptr, int error);
 
 #endif

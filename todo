@@ -5,7 +5,13 @@ Philo_one:
 Philo_two:
     - Pourquoi "=================================================================" ?
     - Mauvais exit parfois quand un philosophe meurt
+    - ./philo_two 5 800 200 200 7
+        Parfois delacage de 10 en prenant une fourchette
 
 Philo_three:
     - ./philo_three 6 100 40 40 4
         les philosophers meurent trop tard (en prenant la fork)
+
+Global:
+    - valeur limite autorisees a verifier
+    - leaks

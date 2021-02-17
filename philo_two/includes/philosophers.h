@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:16:32 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 10:37:00 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 12:05:21 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,16 @@ typedef struct		s_game
 ** init_philo_two.c
 */
 int					catch_arg(t_game *game, int argc, char **argv);
-int					philosopher_open_sem(t_philosopher *philo);	// new
+int					philosopher_open_sem(t_philosopher *philo);
 int					game_init(t_game *game);
 
 /*
 ** philo_utils.c
 */
-int		print_state(t_philosopher *philo, int time, char *str);
-int		get_time(void);
-int		check_all_philo_dead(t_game *game); // new
-int		print_errno(void);	// new
-
+int					print_state_full(t_philosopher *philo, int time);
+int					print_state(t_philosopher *philo, int time, char *str);
+int					get_time(void);
+int					check_all_philo_dead(t_game *game);
 
 /*
 ** activity.c

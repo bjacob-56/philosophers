@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:25 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 11:03:26 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 12:07:07 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,22 @@ void	*launch_philo(void *ptr)
 			philo->state != DEAD &&
 			(!philo->game->nb_philo_eat || count < philo->game->nb_philo_eat))
 		philo_circle(philo, &count);
-	// sem_close(philo->game->fork_sem);
-	// sem_close(philo->game->print_sem);
 	return (ptr);
 }
 
-int	create_thread_philo(t_game *game, int i)
+int		create_thread_philo(t_game *game, int i)
 {
-	if (pthread_create(&((game->philo)[i])->thread, NULL, &launch_philo, (void*)((game->philo)[i])))
+	if (pthread_create(&((game->philo)[i])->thread, NULL,
+						&launch_philo, (void*)((game->philo)[i])))
 		return (ft_error(game, NULL, F_THREAD_CREATE));
 	return (SUCCESS);
 }
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	t_game	game;
 	int		i;
-	
+
 	if (catch_arg(&game, argc, argv) == FAILURE)
 		return (FAILURE);
 	if (game_init(&game) == FAILURE)
@@ -56,7 +55,7 @@ int	main(int argc, char **argv)
 	check_all_philo_dead(&game);
 	i = -1;
 	while (++i < game.nb_philo)
-		pthread_join(((game.philo)[i])->thread, NULL); // 2nd arg a ajuster ?
+		pthread_join(((game.philo)[i])->thread, NULL);
 	sem_close(game.print_sem);
 	sem_close(game.fork_sem);
 	return (free_all_ptr(&game));

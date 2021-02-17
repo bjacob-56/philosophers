@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:12:44 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 11:22:47 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 11:57:48 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,11 @@ int					game_init(t_game *game);
 /*
 ** philo_utils.c
 */
-int		print_state(t_philosopher *philo, int time, char *str);
-int		get_time(void);
-int		check_dead(int time, t_philosopher *philo);
-int		check_all_philo_dead(t_game *game); // new
+int					print_state_full(t_philosopher *philo, int time);
+int					print_state(t_philosopher *philo, int time, char *str);
+int					get_time(void);
+int					check_dead(int time, t_philosopher *philo);
+int					check_all_philo_dead(t_game *game);
 
 /*
 ** activity.c
@@ -113,8 +114,7 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				*add_lst_to_free(t_game *game, void *ptr);
 void				*malloc_lst(t_game *game, int size);
 int					free_all_ptr(t_game *game);
-int		clear_all_mutex(t_game *game);
-// void	ft_exit(t_game *game);
+int					clear_all_mutex(t_game *game);
 
 /*
 ** errors.c

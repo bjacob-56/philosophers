@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:19 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 10:08:58 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 12:23:08 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@ int			catch_arg(t_game *game, int argc, char **argv)
 	game->nb_philo_eat = 0;
 	if (argc == 6)
 		game->nb_philo_eat = ft_atoi(argv[5]);
-	// game->id_philo = 0;
-
-// dprintf(1, "nb_philo = %d\nt_die = %d\nt_eat = %d\nt_sleep = %d\nb_philo_eat = %d\n", game->nb_philo, game->t_die, game->t_eat, game->t_sleep, game->nb_philo_eat);
-
 	return (SUCCESS);
 }
 
@@ -59,38 +55,17 @@ static int	fork_init(t_game *game, int i)
 	fork->private_fork_sem = sem_open(fork_name, O_CREAT, S_IRWXU, 1);
 	if (fork->private_fork_sem == SEM_FAILED)
 		return (ft_error(game, NULL, F_SEM_CREATE));
-
-// dprintf(1, "fork name = %s\n", fork_name);
-// dprintf(1, "p4, i = %d\n", i);
-
-		
 	sem_wait(fork->private_fork_sem);
-
-// dprintf(1, "p5\n");
-
-
 	sem_unlink(fork_name);
 	(game->fork)[i] = fork;
 	return (SUCCESS);
 }
 
-int			game_init(t_game *game)
+static int	create_semaphores(t_game *game)
 {
-	int		i;
-
-	game->next_philo_eat = 1;
-	game->ptrs = NULL;
-	if (!(game->philo = malloc_lst(game, sizeof(t_philosopher*) * game->nb_philo)))
-		return (ft_error(game, NULL, F_MALLOC));
-	if (!(game->fork = malloc_lst(game, sizeof(t_fork*) * game->nb_philo)))
-		return (ft_error(game, NULL, F_MALLOC));
-	if (!(game->tab_pid = malloc_lst(game, sizeof(pid_t) * game->nb_philo)))
-		return (ft_error(game, NULL, F_MALLOC));
-	
 	sem_unlink("/print_sem");
 	sem_unlink("/fork_sem");
 	sem_unlink("/place_sem");
-	
 	game->print_sem = sem_open("/print_sem", O_CREAT, S_IRWXU, 1);
 	if (game->print_sem == SEM_FAILED)
 		return (ft_error(game, NULL, F_SEM_CREATE));
@@ -100,25 +75,32 @@ int			game_init(t_game *game)
 	game->place_sem = sem_open("/place_sem", O_CREAT, S_IRWXU, 1);
 	if (game->place_sem == SEM_FAILED)
 		return (ft_error(game, NULL, F_SEM_CREATE));
+	return (SUCCESS);
+}
 
-// dprintf(1, "p2\n");
+int			game_init(t_game *game)
+{
+	int		i;
 
-
+	game->next_philo_eat = 1;
+	game->ptrs = NULL;
+	if (!(game->philo = malloc_lst(game,
+			sizeof(t_philosopher*) * game->nb_philo)))
+		return (ft_error(game, NULL, F_MALLOC));
+	if (!(game->fork = malloc_lst(game, sizeof(t_fork*) * game->nb_philo)))
+		return (ft_error(game, NULL, F_MALLOC));
+	if (!(game->tab_pid = malloc_lst(game, sizeof(pid_t) * game->nb_philo)))
+		return (ft_error(game, NULL, F_MALLOC));
+	if (create_semaphores(game) == FAILURE)
+		return (FAILURE);
 	i = -1;
 	while (++i < game->nb_philo)
 		if (fork_init(game, i) == FAILURE)
 			return (FAILURE);
-// dprintf(1, "p3\n");
-
-	
 	sem_post(game->fork[0]->private_fork_sem);
-	// gettimeofday(&(game->start), NULL);
 	i = -1;
 	while (++i < game->nb_philo)
 		if (philosopher_init(game, i) == FAILURE)
 			return (FAILURE);
-
-// dprintf(1, "p1\n");
-
 	return (SUCCESS);
 }

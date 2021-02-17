@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:06 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 10:37:45 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 12:13:31 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static int	get_forks(t_philosopher *philo)
 	sem_wait(philo->game->fork[philo->number - 1]->private_fork_sem);
 	get_one_fork(philo);
 	get_one_fork(philo);
-	sem_post(philo->game->fork[philo->number % philo->game->nb_philo]->private_fork_sem);
+	sem_post(philo->game->fork[philo->number %
+			philo->game->nb_philo]->private_fork_sem);
 	return (SUCCESS);
 }
 
@@ -35,9 +36,9 @@ static int	ft_eat(t_philosopher *philo, int *count)
 {
 	int	start_eat;
 	int	time;
+
 	start_eat = get_time_void();
 	time = start_eat;
-
 	print_state(philo, start_eat, "is eating");
 	philo->time_last_meal = start_eat;
 	while (time - start_eat < philo->game->t_eat)
@@ -68,7 +69,7 @@ static int	ft_sleep(t_philosopher *philo, int *count)
 	return (SUCCESS);
 }
 
-int philo_circle(t_philosopher *philo, int *count)
+int			philo_circle(t_philosopher *philo, int *count)
 {
 	get_forks(philo);
 	ft_eat(philo, count);
