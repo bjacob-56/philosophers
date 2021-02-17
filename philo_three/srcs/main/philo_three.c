@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:35 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 08:56:46 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 10:24:02 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ void	launch_philo(t_philosopher *philo)
 	count = 0;
 	if (pthread_create(&philo->thread, NULL, &check_dead_philo_background, (void*)philo))
 	{
-		print_error(philo->print_sem, F_THREAD_CREATE);
+		print_error(philo->game->print_sem, F_THREAD_CREATE);
 		exit (DEAD);
 	}
 	if (pthread_detach(((philo->thread))))
 	{
-		print_error(philo->print_sem, F_THREAD_DETACH);
+		print_error(philo->game->print_sem, F_THREAD_DETACH);
 		exit (DEAD);
 	}
-	while ((!philo->nb_philo_eat || count < philo->nb_philo_eat))
+	while ((!philo->game->nb_philo_eat || count < philo->game->nb_philo_eat))
 		philo_circle(philo, &count);
 	exit(SUCCESS);
 }
@@ -42,7 +42,6 @@ int	ft_kill_all_child(t_game *game)
 	return (SUCCESS);
 }
 
-
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -55,6 +54,7 @@ int	main(int argc, char **argv)
 	if (game_init(&game) == FAILURE)
 		return (FAILURE);
 	i = -1;
+	game.start_time = get_time_void();
 	while (++i < game.nb_philo)
 	{
 		if ((program = fork()) == -1)	// gestion des childs deja crees avant
@@ -63,6 +63,7 @@ int	main(int argc, char **argv)
 			launch_philo((game.philo)[i]);
 		else
 			game.tab_pid[i] = program;
+		usleep(100);
 	}
 
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:25 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 16:24:18 by bjacob           ###   ########.fr       */
+/*   Updated: 2021/02/17 11:03:26 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ void	*launch_philo(void *ptr)
 
 	philo = (t_philosopher*)ptr;
 	count = 0;
-	while (*philo->is_over < philo->nb_philo && philo->state != DEAD &&
-		(!philo->nb_philo_eat || count < philo->nb_philo_eat))
+	while (philo->game->is_over < philo->game->nb_philo &&
+			philo->state != DEAD &&
+			(!philo->game->nb_philo_eat || count < philo->game->nb_philo_eat))
 		philo_circle(philo, &count);
+	// sem_close(philo->game->fork_sem);
+	// sem_close(philo->game->print_sem);
 	return (ptr);
 }
 
@@ -42,6 +45,7 @@ int	main(int argc, char **argv)
 	if (game_init(&game) == FAILURE)
 		return (FAILURE);
 	i = -1;
+	game.start_time = get_time();
 	while (++i < game.nb_philo)
 		if (create_thread_philo(&game, i) == FAILURE)
 			return (FAILURE);

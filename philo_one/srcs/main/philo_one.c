@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:32:49 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 17:00:32 by bjacob           ###   ########.fr       */
+/*   Updated: 2021/02/17 11:23:16 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	*launch_philo(void *ptr)
 
 	philo = (t_philosopher*)ptr;
 	count = 0;
-	while (*philo->is_over < philo->nb_philo &&
-		(!philo->nb_philo_eat || count < philo->nb_philo_eat))
+	while (philo->game->is_over < philo->game->nb_philo &&
+		(!philo->game->nb_philo_eat || count < philo->game->nb_philo_eat))
 		philo_circle(philo, &count);
 	return (ptr);
 }
@@ -42,6 +42,7 @@ int	main(int argc, char **argv)
 	if (game_init(&game) == FAILURE)
 		return (FAILURE);
 	i = -1;
+	game.start_time = get_time();
 	while (++i < game.nb_philo)
 		if (create_thread_philo(&game, i) == FAILURE)
 			return (FAILURE);
@@ -56,32 +57,7 @@ int	main(int argc, char **argv)
 	while (++i < game.nb_philo)
 		pthread_join(((game.philo)[i])->thread, NULL); // 2nd arg a ajuster ?
 
+	clear_all_mutex(&game);
+	
 	return (free_all_ptr(&game));
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	t_game	*game;
-// 	int		i;
-
-// 	game = malloc(sizeof(t_game));	
-// 	if (catch_arg(game, argc, argv) == FAILURE)
-// 		return (FAILURE);
-// 	if (game_init(game) == FAILURE)
-// 		return (FAILURE);
-// 	i = -1;
-// 	while (++i < game->nb_philo)
-// 		if (create_thread_philo(game, i) == FAILURE)
-// 			return (FAILURE);
-// 	i = -1;
-// 	while (++i < game->nb_philo)
-// 		if (pthread_detach(((game->philo)[i])->thread)) // 2nd arg a ajuster ?
-// 			return (ft_error(game, NULL, F_THREAD_DETACH));
-// 	check_all_philo_dead(game);
-// 	// while (++i < game.nb_philo)
-// 	// 	if (pthread_join(((game.philo)[i])->thread, NULL)) // 2nd arg a ajuster ?
-// 	// 		return (ft_error(&game, NULL, F_THREAD_JOIN));
-// 	return (free_all_ptr(game));
-
-// 	// return(0);
-// }

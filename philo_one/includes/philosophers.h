@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:12:44 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 16:05:58 by bjacob           ###   ########.fr       */
+/*   Updated: 2021/02/17 11:22:47 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,12 @@ typedef struct		s_philosopher
 {
 	int				number;
 	int				state;
-	int				t_die;
-	int				t_eat;
-	int				t_sleep;
-	int				nb_philo_eat;
 	int				time_last_meal;
 	int				time_start_sleep;
 	t_fork			*fork_l;
 	t_fork			*fork_r;
 	pthread_t		thread;
-	struct timeval	start;
-	pthread_mutex_t *print_mutex;
-	// pthread_mutex_t *fork_mutex;
-	int				*is_over;
-	int				nb_philo;
+	struct s_game	*game;
 }					t_philosopher;
 
 typedef struct		s_game
@@ -78,9 +70,8 @@ typedef struct		s_game
 	t_philosopher	**philo;
 	t_fork			**fork;
 	t_list			*ptrs;
-	struct timeval	start;
+	int				start_time;
 	pthread_mutex_t print_mutex;
-	// pthread_mutex_t fork_mutex;
 	int				is_over;
 }					t_game;
 
@@ -93,11 +84,9 @@ int					game_init(t_game *game);
 /*
 ** philo_utils.c
 */
-int					print_state(t_philosopher *philo, struct timeval tv,
-								char *str);
-int					get_relative_time(struct timeval start, struct timeval tv);
-int					get_time_since_start(t_philosopher *philo);
-int					check_dead(struct timeval tv, t_philosopher *philo);
+int		print_state(t_philosopher *philo, int time, char *str);
+int		get_time(void);
+int		check_dead(int time, t_philosopher *philo);
 int		check_all_philo_dead(t_game *game); // new
 
 /*
@@ -124,6 +113,7 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				*add_lst_to_free(t_game *game, void *ptr);
 void				*malloc_lst(t_game *game, int size);
 int					free_all_ptr(t_game *game);
+int		clear_all_mutex(t_game *game);
 // void	ft_exit(t_game *game);
 
 /*

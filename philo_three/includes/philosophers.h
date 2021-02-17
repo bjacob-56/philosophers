@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:13:31 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 08:57:49 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 10:08:42 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,11 @@ typedef struct		s_fork
 typedef struct		s_philosopher
 {
 	int				number;
-	int				state;
-	int				t_die;
-	int				t_eat;
-	int				t_sleep;
-	int				nb_philo_eat;
 	int				time_last_meal;
 	int				time_start_sleep;
-	struct timeval	start;
-	sem_t			*print_sem;
-	sem_t			*fork_sem;
-	sem_t			*place_sem;
 	pthread_t		thread;
-	t_fork			**fork;
 	int				*next_philo_eat;
-	int				*is_over;
-	int				nb_philo;
+	struct s_game	*game;
 }					t_philosopher;
 
 typedef struct		s_game
@@ -83,12 +72,11 @@ typedef struct		s_game
 	t_philosopher	**philo;
 	t_fork			**fork;
 	t_list			*ptrs;
-	struct timeval	start;
+	int				start_time;
 	sem_t			*print_sem;
 	sem_t			*fork_sem;
 	sem_t			*place_sem;
 	int				next_philo_eat;
-	int				is_over;
 	pid_t			*tab_pid;
 }					t_game;
 
@@ -101,10 +89,10 @@ int					game_init(t_game *game);
 /*
 ** philo_utils.c
 */
-int					print_state(t_philosopher *philo, struct timeval tv,
-								char *str);
+int		print_state(t_philosopher *philo, int time, char *str); // new
 int					get_relative_time(struct timeval start, struct timeval tv);
-int					check_dead(struct timeval tv, t_philosopher *philo);
+int		get_time(struct timeval tv);
+int		get_time_void(void);
 void	*check_dead_philo_background(void *ptr); // new
 
 

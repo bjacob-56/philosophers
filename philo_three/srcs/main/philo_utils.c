@@ -6,33 +6,34 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:47 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 08:57:46 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 10:21:35 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
 
-int		print_state(t_philosopher *philo, struct timeval tv, char *str)
+int		print_state(t_philosopher *philo, int time, char *str)
 {
-	sem_wait(philo->print_sem);
-	dprintf(1, "%d %d %s\n", get_relative_time(philo->start, tv), philo->number, str);
-	sem_post(philo->print_sem);
+	sem_wait(philo->game->print_sem);
+	dprintf(1, "%d %d %s\n", time - philo->game->start_time, philo->number, str);
+	sem_post(philo->game->print_sem);
 	return (SUCCESS);
 }
 
-int		get_relative_time(struct timeval start, struct timeval tv)
+int		get_time_void(void)
 {
-	return((tv.tv_sec - start.tv_sec) * 1000 + (tv.tv_usec - start.tv_usec) / 1000);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return(tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-int		check_dead(struct timeval tv, t_philosopher *philo)
+int		check_dead(int time, t_philosopher *philo)
 {
-	if (get_relative_time(philo->start, tv) - philo->time_last_meal > philo->t_die)
+	if (time - philo->time_last_meal > philo->game->t_die)
 	{
-		sem_wait(philo->print_sem);
-		printf("%d %d %s\n", get_relative_time(philo->start, tv), philo->number, "died");
+		printf("%d %d %s\n", get_time_void() - philo->game->start_time, philo->number, "died");
 		exit(DEAD);
-		// sem_post(philo->print_sem);
 	}
 	return (SUCCESS);
 }
@@ -40,13 +41,14 @@ int		check_dead(struct timeval tv, t_philosopher *philo)
 void	*check_dead_philo_background(void *ptr)
 {
 	t_philosopher *philo;
-	struct timeval tv;
 
 	philo = (t_philosopher*)ptr;
 	while (1)
 	{
-		gettimeofday(&tv, NULL);
-		check_dead(tv, philo);
+		sem_wait(philo->game->print_sem);
+		check_dead(get_time_void(), philo);
+		sem_post(philo->game->print_sem);
+		usleep(100);
 	}
 	return (ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:09 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 15:13:57 by bjacob           ###   ########.fr       */
+/*   Updated: 2021/02/17 10:44:19 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,9 @@ static int	philosopher_init(t_game *game, int i)
 		return (ft_error(game, NULL, F_MALLOC));
 	philo->number = i + 1;
 	philo->state = THINKING;
-	philo->t_die = game->t_die;
-	philo->t_eat = game->t_eat;
-	philo->t_sleep = game->t_sleep;
-	philo->nb_philo_eat = game->nb_philo_eat;
 	philo->time_last_meal = 0;
-	philo->time_start_sleep = 0;
-	philo->start = game->start;
-	philo->print_sem = game->print_sem;
-	philo->fork_sem = game->fork_sem;
-	philo->next_philo_eat = &game->next_philo_eat;
-	philo->is_over = &game->is_over;
-	philo->nb_philo = game->nb_philo;
+	philo->time_start_sleep = 0;	
+	philo->game = game;
 	(game->philo)[i] = philo;
 	return (SUCCESS);
 }
@@ -71,7 +62,6 @@ int			game_init(t_game *game)
 	sem_unlink("/fork_sem");
 	sem_unlink("/place_sem");
 
-	gettimeofday(&(game->start), NULL);
 	i = -1;
 	while (++i < game->nb_philo)
 		if (philosopher_init(game, i) == FAILURE)

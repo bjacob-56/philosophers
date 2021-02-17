@@ -4,6 +4,7 @@ Philo_one:
 
 Philo_two:
     - Pourquoi "=================================================================" ?
+    - Mauvais exit parfois quand un philosophe meurt
 
 Philo_three:
     - ./philo_three 6 100 40 40 4
