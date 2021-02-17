@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:13:31 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 13:39:52 by bjacob           ###   ########.fr       */
+/*   Updated: 2021/02/17 08:57:49 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@
 # define F_NB_ARG -1
 # define F_MALLOC -2
 # define F_FORK_CREATE -3
-# define F_SEM_CREATE -5
+# define F_SEM_CREATE -4
+# define F_THREAD_CREATE -5
+# define F_THREAD_DETACH -6
 
 # define EATING 0
 # define THINKING 1
@@ -64,6 +66,7 @@ typedef struct		s_philosopher
 	sem_t			*print_sem;
 	sem_t			*fork_sem;
 	sem_t			*place_sem;
+	pthread_t		thread;
 	t_fork			**fork;
 	int				*next_philo_eat;
 	int				*is_over;
@@ -101,9 +104,9 @@ int					game_init(t_game *game);
 int					print_state(t_philosopher *philo, struct timeval tv,
 								char *str);
 int					get_relative_time(struct timeval start, struct timeval tv);
-int					get_time_since_start(t_philosopher *philo);
 int					check_dead(struct timeval tv, t_philosopher *philo);
-int		check_all_philo_dead(t_game *game); // new	
+void	*check_dead_philo_background(void *ptr); // new
+
 
 /*
 ** activity.c
@@ -139,7 +142,7 @@ int					free_all_ptr(t_game *game);
 /*
 ** errors.c
 */
-int					print_error(t_game *game, int error);
+int	print_error(sem_t *print_sem, int error);
 int					ft_error(t_game *game, void *ptr, int error);
 
 #endif

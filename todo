@@ -3,7 +3,7 @@ Philo_one:
     - Porbleme de saut de ms --> faute du mac ?
 
 Philo_two:
-    - Mauvais exit : ./philo_two 4 85 40 40 4
+    - Pourquoi "=================================================================" ?
 
 Philo_three:
     - ./philo_three 6 100 40 40 4

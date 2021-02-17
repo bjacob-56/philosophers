@@ -6,31 +6,30 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:35 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 14:10:24 by bjacob           ###   ########.fr       */
+/*   Updated: 2021/02/17 08:56:46 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
 
-void	*launch_philo(void *ptr)
+void	launch_philo(t_philosopher *philo)
 {
 	int				count;
-	t_philosopher *philo;
 
-	philo = (t_philosopher*)ptr;
 	count = 0;
+	if (pthread_create(&philo->thread, NULL, &check_dead_philo_background, (void*)philo))
+	{
+		print_error(philo->print_sem, F_THREAD_CREATE);
+		exit (DEAD);
+	}
+	if (pthread_detach(((philo->thread))))
+	{
+		print_error(philo->print_sem, F_THREAD_DETACH);
+		exit (DEAD);
+	}
 	while ((!philo->nb_philo_eat || count < philo->nb_philo_eat))
 		philo_circle(philo, &count);
 	exit(SUCCESS);
-	// return (ptr);
-}
-
-int	create_fork_philo(t_game *game, int i)
-{
-	launch_philo((void*)((game->philo)[i]));
-	// if (pthread_create(&((game->philo)[i])->thread, NULL, &launch_philo, (void*)((game->philo)[i])))
-	// 	return (ft_error(game, NULL, F_THREAD_CREATE));
-	return (SUCCESS);
 }
 
 int	ft_kill_all_child(t_game *game)
@@ -61,12 +60,11 @@ int	main(int argc, char **argv)
 		if ((program = fork()) == -1)	// gestion des childs deja crees avant
 			return (ft_error(&game, NULL, F_FORK_CREATE));
 		if (!program)
-			return (create_fork_philo(&game, i));
+			launch_philo((game.philo)[i]);
 		else
 			game.tab_pid[i] = program;
 	}
 
-///		gestion a faire pour s'arreter avant mais pas trop tot
 	i = -1;
 	while (++i < game.nb_philo)
 	{
@@ -74,7 +72,7 @@ int	main(int argc, char **argv)
 		if (WEXITSTATUS(status) == DEAD)
 			ft_kill_all_child(&game);
 	}
-///
+
 	i = -1;
 	while (++i < game.nb_philo)	// Bonne maniere de faire ?
 		kill(game.tab_pid[i], SIGKILL);
@@ -82,6 +80,6 @@ int	main(int argc, char **argv)
 	sem_close(game.print_sem);
 	sem_close(game.fork_sem);
 	sem_close(game.place_sem);
-		
+
 	return (free_all_ptr(&game));
 }

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:19 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 13:45:06 by bjacob           ###   ########.fr       */
+/*   Updated: 2021/02/17 08:57:03 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int			catch_arg(t_game *game, int argc, char **argv)
 {
 	if (argc < 5 || argc > 6)
-		return (print_error(game, F_NB_ARG));
+		return (print_error(NULL, F_NB_ARG));
 	game->nb_philo = ft_atoi(argv[1]);
 	game->t_die = ft_atoi(argv[2]);
 	game->t_eat = ft_atoi(argv[3]);
@@ -50,7 +50,6 @@ static int	philosopher_init(t_game *game, int i)
 	philo->place_sem = game->place_sem;
 	philo->fork = game->fork;
 	philo->next_philo_eat = &game->next_philo_eat;
-	philo->is_over = &game->is_over;
 	philo->nb_philo = game->nb_philo;
 	(game->philo)[i] = philo;
 	return (SUCCESS);

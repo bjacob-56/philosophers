@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:36:54 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 15:17:26 by bjacob           ###   ########.fr       */
+/*   Updated: 2021/02/17 08:49:53 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	sem_post(philo->fork_sem);
 	sem_post(philo->fork_sem);
 	(*count)++;
-	if (*philo->is_over < philo->nb_philo && *count < philo->nb_philo_eat)
+	if (*philo->is_over < philo->nb_philo &&
+		(*count < philo->nb_philo_eat || !philo->nb_philo_eat))
 		print_state(philo, tv, "is sleeping");
 	if (*philo->is_over < philo->nb_philo && *count == philo->nb_philo_eat)
 	{

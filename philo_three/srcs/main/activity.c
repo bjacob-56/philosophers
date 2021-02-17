@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:06 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 14:30:14 by bjacob           ###   ########.fr       */
+/*   Updated: 2021/02/17 09:08:04 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,24 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	struct timeval	tv;
 
 	gettimeofday(&start_eat, NULL);
-	check_dead(start_eat, philo);
+	// check_dead(start_eat, philo);
 	tv = start_eat;
 	print_state(philo, start_eat, "is eating");
 	philo->time_last_meal = get_relative_time(philo->start, start_eat);
 	while (get_relative_time(start_eat, tv) < philo->t_eat)
 	{
 		gettimeofday(&tv, NULL);
-		check_dead(tv, philo);
+		// check_dead(tv, philo);
 	}
 	sem_post(philo->fork_sem);
 	sem_post(philo->fork_sem);
 	(*count)++;
-	if (*count < philo->nb_philo_eat)
+	if (*count < philo->nb_philo_eat || !philo->nb_philo_eat)
 		print_state(philo, tv, "is sleeping");
 	if (*count == philo->nb_philo_eat)
 	{
 		print_state(philo, tv, "is full");
 		philo->state = FULL;
-		(*(philo->is_over))++;
 	}
 	return (SUCCESS);
 }
@@ -66,12 +65,12 @@ static int	ft_sleep(t_philosopher *philo)
 	struct timeval	tv;
 
 	gettimeofday(&start_sleep, NULL);
-	check_dead(start_sleep, philo);
+	// check_dead(start_sleep, philo);
 	tv = start_sleep;
 	while (get_relative_time(start_sleep, tv) < philo->t_sleep)
 	{
 		gettimeofday(&tv, NULL);
-		check_dead(tv, philo);
+		// check_dead(tv, philo);
 	}
 	print_state(philo, tv, "is thinking");
 	

@@ -6,13 +6,13 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:25:40 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/13 16:25:50 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 08:23:50 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
 
-int	print_error(t_game *game, int error)
+int	print_error(sem_t *print_sem, int error) // a reprendre
 {
 	if (error == F_NB_ARG)
 		printf("Wrong number of arguments\n");
@@ -20,17 +20,16 @@ int	print_error(t_game *game, int error)
 		printf("A malloc failed\n");
 	else if (error == F_SEM_CREATE)
 		printf("The semaphore couldn't be created\n");
+	else if (error == F_THREAD_CREATE)
+		printf("The thread couldn't be created\n");
+	else if (error == F_THREAD_DETACH)
+		printf("The thread couldn't be detached\n");
 	else
 	{
-		// pthread_mutex_lock(&game->print_mutex);
-		sem_wait(game->print_sem);
-		if (game->is_over)
-			return (SUCCESS);
+		sem_wait(print_sem);
 		if (error == F_FORK_CREATE)
 			printf("The fork couldn't be created\n");
-		game->is_over = 1;
-		// pthread_mutex_unlock(&game->print_mutex);
-		sem_post(game->print_sem);
+		sem_post(print_sem);
 	}
 	return (FAILURE);
 }
@@ -39,6 +38,6 @@ int	ft_error(t_game *game, void *ptr, int error)
 {
 	free(ptr);
 	free_all_ptr(game);
-	print_error(game, error);
+	print_error(game->print_sem, error);
 	return (FAILURE);
 }

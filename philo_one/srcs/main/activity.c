@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:32:04 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 15:17:10 by bjacob           ###   ########.fr       */
+/*   Updated: 2021/02/17 08:53:17 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	pthread_mutex_unlock(&philo->fork_l->mutex);
 	pthread_mutex_unlock(&philo->fork_r->mutex);
 	(*count)++;
-	if (*philo->is_over < philo->nb_philo && *count < philo->nb_philo_eat)
+	if (*philo->is_over < philo->nb_philo &&
+		(*count < philo->nb_philo_eat || !philo->nb_philo_eat))
 		print_state(philo, tv, "is sleeping");
 	if (*philo->is_over < philo->nb_philo && *count == philo->nb_philo_eat)
 	{

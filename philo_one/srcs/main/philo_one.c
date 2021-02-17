@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:32:49 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/16 16:24:03 by bjacob           ###   ########.fr       */
+/*   Updated: 2021/02/16 17:00:32 by bjacob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,13 @@ int	main(int argc, char **argv)
 	while (++i < game.nb_philo)
 		if (pthread_detach(((game.philo)[i])->thread)) // 2nd arg a ajuster ?
 			return (ft_error(&game, NULL, F_THREAD_DETACH));
+	
 	check_all_philo_dead(&game);
+
 	i = -1;
 	while (++i < game.nb_philo)
 		pthread_join(((game.philo)[i])->thread, NULL); // 2nd arg a ajuster ?
+
 	return (free_all_ptr(&game));
 }
 
