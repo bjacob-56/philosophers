@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:19 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:23:19 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 15:36:42 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,8 @@ static int	fork_init(t_game *game, int i)
 		return (ft_error(game, NULL, F_MALLOC, i));
 	sem_unlink(fork_name);	//
 	fork->private_fork_sem = sem_open(fork_name, O_CREAT, S_IRWXU, 0);
-	// fork->private_fork_sem = sem_open(fork_name, O_CREAT, S_IRWXU, 1);
-	// fork->private_fork_sem = sem_open(fork_name, O_CREAT | O_EXCL, 420, 1);
 	if (fork->private_fork_sem == SEM_FAILED)
 		return (ft_error(game, NULL, F_SEM_CREATE, i));
-	// sem_wait(fork->private_fork_sem);
 	(game->fork)[i] = fork;
 	return (SUCCESS);
 }
@@ -66,15 +63,18 @@ static int	create_semaphores(t_game *game)
 {
 	game->print_sem = NULL;
 	game->fork_sem = NULL;
+	game->end_sem = NULL;
 	sem_unlink("/print_sem");
 	sem_unlink("/fork_sem");
+	sem_unlink("/end_sem");
 	game->print_sem = sem_open("/print_sem", O_CREAT, S_IRWXU, 1);
-	// game->print_sem = sem_open("/print_sem", O_CREAT | O_EXCL, 420, 1);
 	if (game->print_sem == SEM_FAILED)
 		return (ft_error(game, NULL, F_SEM_CREATE, 0));
 	game->fork_sem = sem_open("/fork_sem", O_CREAT, S_IRWXU, game->nb_philo);
-	// game->fork_sem = sem_open("/fork_sem", O_CREAT | O_EXCL, 420, game->nb_philo);
 	if (game->fork_sem == SEM_FAILED)
+		return (ft_error(game, NULL, F_SEM_CREATE, 0));
+	game->end_sem = sem_open("/end_sem", O_CREAT, S_IRWXU, 0);
+	if (game->end_sem == SEM_FAILED)
 		return (ft_error(game, NULL, F_SEM_CREATE, 0));
 	return (SUCCESS);
 }

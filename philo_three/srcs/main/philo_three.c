@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:35 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:14:55 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/17 15:35:00 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,12 @@ void	launch_philo(t_philosopher *philo)
 	}
 	while ((!philo->game->nb_philo_eat || count < philo->game->nb_philo_eat))
 		philo_circle(philo, &count);
-
-dprintf(1, "exit id %d ----------------------------------------\n", philo->number);
-	// while (1)
-	// {
-	// 	philo->time_last_meal = get_time();
-	// 	usleep(1000);
-	// }
-	exit(SUCCESS);
+	sem_post(philo->game->end_sem);
+	while (1)
+	{
+		philo->time_last_meal = get_time();
+		usleep(1000);
+	}
 }
 
 int		ft_kill_all_child(t_game *game)
@@ -54,7 +52,6 @@ int		create_and_manage_childs(t_game *game)
 {
 	int		i;
 	pid_t	program;
-	int		status;
 
 	i = -1;
 	while (++i < game->nb_philo)
@@ -68,16 +65,7 @@ int		create_and_manage_childs(t_game *game)
 	}
 	i = -1;
 	while (++i < game->nb_philo)
-	{
-
-dprintf(1, "waiting next child %d\n", i);
-		waitpid(-1, &status, 0);
-
-dprintf(1, "exit confirmed %d\n", i);
-
-		if (WEXITSTATUS(status) == DEAD)
-			ft_kill_all_child(game);
-	}
+		sem_wait(game->end_sem);
 	i = -1;
 	while (++i < game->nb_philo)
 		kill(game->tab_pid[i], SIGKILL);
