@@ -6,12 +6,11 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 17:21:20 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 17:43:56 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 08:35:07 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
-
 
 int		create_childs(t_game *game)
 {
@@ -22,7 +21,10 @@ int		create_childs(t_game *game)
 	while (++i < game->nb_philo)
 	{
 		if ((program = fork()) == -1)
+		{
+			ft_kill_all_child(game, i);
 			return (ft_error(game, NULL, F_FORK_CREATE, game->nb_philo));
+		}
 		if (!program)
 			launch_philo((game->philo)[i]);
 		else
@@ -33,7 +35,7 @@ int		create_childs(t_game *game)
 
 void	*check_childs(void *ptr)
 {
-	int	status;
+	int		status;
 	t_game	*game;
 
 	game = (t_game*)ptr;
@@ -51,7 +53,7 @@ int		manage_childs(t_game *game)
 {
 	int			i;
 	pthread_t	thread_childs;
-	
+
 	if (pthread_create(&thread_childs, NULL,
 					&check_childs, (void*)game))
 	{
@@ -66,9 +68,6 @@ int		manage_childs(t_game *game)
 	i = -1;
 	while (++i < game->nb_philo)
 		sem_wait(game->end_sem);
-	i = -1;
-	while (++i < game->nb_philo)
-		kill(game->tab_pid[i], SIGUSR1);
+	ft_kill_all_child(game, game->nb_philo);
 	return (SUCCESS);
 }
-

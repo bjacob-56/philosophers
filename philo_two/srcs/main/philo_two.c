@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:25 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 16:58:37 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 08:28:38 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		create_thread_philo(t_game *game, int i)
 						&launch_philo, (void*)((game->philo)[i])))
 	{
 		game->is_over = game->nb_philo;
-		return (ft_error(game, NULL, F_THREAD_CREATE));
+		return (print_error(game, F_THREAD_CREATE));
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:35 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 17:23:00 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 08:18:01 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ void	launch_philo(t_philosopher *philo)
 	}
 }
 
-int		ft_kill_all_child(t_game *game)
+int		ft_kill_all_child(t_game *game, int nb_childs)
 {
 	int i;
 
 	i = -1;
-	while (++i < game->nb_philo)
-		kill(game->tab_pid[i], SIGKILL);
+	while (++i < nb_childs)
+		kill(game->tab_pid[i], SIGUSR1);
 	return (SUCCESS);
 }
 
