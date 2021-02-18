@@ -1,14 +1,9 @@
-Philo_one:
-    - Pourquoi "=================================================================" ?
-
-Philo_two:
-    - ./philo_two 4 100 50 51 7
-        boucle infini apres la mort
-
-Philo_three:
-
-
 Global:
-    - valeur limite autorisees a verifier
-    - leaks
-    - test avec 2 philosophes
+	- 1 philo -> ne pas bloquer avec l'unique fork
+
+philo_one:
+	./philo_one 4 410 200 200 3
+		ne s'arrete pas
+
+philo_two:
+	is_eating --> a corriger
