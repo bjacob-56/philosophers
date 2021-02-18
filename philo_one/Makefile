@@ -7,7 +7,6 @@ PRE_SRCS =	main/philo_one main/init_philo_one main/activity main/philo_utils \
 			utils/lst_utils utils/nb_utils \
 			clear/errors clear/clear_objects
 
-
 SRCS = $(addsuffix .c, $(addprefix $(SRC_DIR), $(PRE_SRCS)))
 OBJS = $(addsuffix .o, $(addprefix $(OBJ_DIR), $(PRE_SRCS)))
 
@@ -25,8 +24,6 @@ all:	$(NAME)
 $(NAME): $(OBJ_DIRS) $(OBJS)
 	$(CC) $(CFLAGS) $(THFLAGS) $(OBJS) $(INC) -o $(NAME) 
 	@echo "----- \033[32m $@ created\033[0m  -----"
-
-
 
 $(OBJ_DIRS):
 	mkdir -p $(OBJ_DIRS)
