@@ -6,11 +6,28 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:32:21 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 10:35:34 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 13:27:50 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
+
+void		check_args_init(t_game *game, int argc)
+{
+	if (!game->nb_philo || !game->t_die || !game->t_eat || !game->t_sleep)
+		exit (SUCCESS);
+	if (argc == 6 && !game->nb_philo_eat)
+	{
+		printf("0 Every philosopher has eaten 0 times\n");
+		exit(SUCCESS);
+	}
+	if (game->nb_philo == 1)
+	{
+		usleep(1000 * game->t_die);
+		printf("%d %d died\n", game->t_die, 1);
+		exit(SUCCESS);
+	}
+}
 
 int			catch_arg(t_game *game, int argc, char **argv)
 {
@@ -22,14 +39,8 @@ int			catch_arg(t_game *game, int argc, char **argv)
 	game->t_sleep = ft_atoi(argv[4]);
 	game->nb_philo_eat = 0;
 	if (argc == 6)
-	{
 		game->nb_philo_eat = ft_atoi(argv[5]);
-		if (!game->nb_philo_eat)
-		{
-			printf("0 Every philosopher has eaten 0 times\n");
-			exit(SUCCESS);
-		}
-	}
+	check_args_init(game, argc);
 	return (SUCCESS);
 }
 

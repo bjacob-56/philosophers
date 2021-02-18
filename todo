@@ -7,3 +7,10 @@ philo_one:
 
 philo_two:
 	is_eating --> a corriger
+
+
+
+
+
+du -sh *
+df -h
