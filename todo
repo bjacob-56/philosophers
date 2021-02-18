@@ -1,16 +1,2 @@
-Global:
-	- 1 philo -> ne pas bloquer avec l'unique fork
-
-philo_one:
-	./philo_one 4 410 200 200 3
-		ne s'arrete pas
-
-philo_two:
-	is_eating --> a corriger
-
-
-
-
-
 du -sh *
 df -h

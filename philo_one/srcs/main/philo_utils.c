@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:33:05 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 13:12:43 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 13:41:40 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	print_state_full(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->game->print_mutex);
-	if (philo->game->is_over < philo->game->nb_philo)
+	if (philo->game->is_over == philo->game->nb_philo - 1)
 	{
 		printf("%d Every philosopher has eaten %d times\n",
 				get_time() - philo->game->start_time,
 				philo->game->nb_philo_eat);
-		philo->game->is_over = philo->game->nb_philo;
 	}
+	philo->game->is_over++;
 	pthread_mutex_unlock(&philo->game->print_mutex);
 	return (SUCCESS);
 }

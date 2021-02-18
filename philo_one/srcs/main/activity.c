@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:32:04 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 10:09:23 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 13:41:03 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,9 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	pthread_mutex_unlock(&philo->fork_l->mutex);
 	pthread_mutex_unlock(&philo->fork_r->mutex);
 	(*count)++;
-	if (philo->game->is_over == philo->game->nb_philo - 1 &&
-		*count == philo->game->nb_philo_eat)
-		print_state_full(philo);
 	if (philo->game->is_over < philo->game->nb_philo &&
 		*count == philo->game->nb_philo_eat)
-		philo->game->is_over++;
+		print_state_full(philo);
 	return (SUCCESS);
 }
 

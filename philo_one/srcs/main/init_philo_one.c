@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:32:21 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 13:27:50 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 13:31:29 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int			catch_arg(t_game *game, int argc, char **argv)
 	if (argc == 6)
 		game->nb_philo_eat = ft_atoi(argv[5]);
 	check_args_init(game, argc);
+
+// dprintf(1, "nb repas = %d\n\n", game->nb_philo_eat);
+
 	return (SUCCESS);
 }
 

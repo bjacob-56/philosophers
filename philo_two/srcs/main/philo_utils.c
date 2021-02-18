@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:40 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 10:47:41 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 13:43:17 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	print_state_full(t_philosopher *philo)
 {
 	sem_wait(philo->game->print_sem);
-	if (philo->game->is_over < philo->game->nb_philo)
+	if (philo->game->is_over == philo->game->nb_philo - 1)
 	{
 		printf("%d Every philosopher has eaten %d times\n",
 				get_time() - philo->game->start_time,
 				philo->game->nb_philo_eat);
-		philo->game->is_over = philo->game->nb_philo;
 	}
+	philo->game->is_over++;
 	sem_post(philo->game->print_sem);
 	return (SUCCESS);
 }

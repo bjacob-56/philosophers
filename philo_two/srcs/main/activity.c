@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:36:54 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 13:13:40 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 13:44:08 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,9 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	sem_post(philo->game->fork_sem);
 	sem_post(philo->game->fork_sem);
 	(*count)++;
-	if (philo->game->is_over == philo->game->nb_philo - 1 &&
-		*count == philo->game->nb_philo_eat)
-		print_state_full(philo);
 	if (philo->game->is_over < philo->game->nb_philo &&
 		*count == philo->game->nb_philo_eat)
-		philo->game->is_over++;
+		print_state_full(philo);
 	return (SUCCESS);
 }
 
