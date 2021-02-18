@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:32:04 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 16:05:57 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 10:09:23 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static int	get_one_fork(t_philosopher *philo, t_fork *fork)
 {
 	int	time;
 
-	while (philo->number == fork->last_philo)
+	while (philo->game->is_over < philo->game->nb_philo &&
+		philo->number == fork->last_philo)
 		;
 	pthread_mutex_lock(&fork->mutex);
 	fork->last_philo = philo->number;
@@ -58,12 +59,12 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	pthread_mutex_unlock(&philo->fork_l->mutex);
 	pthread_mutex_unlock(&philo->fork_r->mutex);
 	(*count)++;
-	if (philo->game->is_over < philo->game->nb_philo &&
-		(*count < philo->game->nb_philo_eat || !philo->game->nb_philo_eat))
-		print_state(philo, "is sleeping");
-	if (philo->game->is_over < philo->game->nb_philo &&
+	if (philo->game->is_over == philo->game->nb_philo - 1 &&
 		*count == philo->game->nb_philo_eat)
 		print_state_full(philo);
+	if (philo->game->is_over < philo->game->nb_philo &&
+		*count == philo->game->nb_philo_eat)
+		philo->game->is_over++;
 	return (SUCCESS);
 }
 
@@ -72,6 +73,8 @@ static int	ft_sleep(t_philosopher *philo)
 	int	start_sleep;
 	int	time;
 
+	if (philo->game->is_over < philo->game->nb_philo)
+		print_state(philo, "is sleeping");
 	start_sleep = get_time();
 	time = start_sleep;
 	if (philo->game->is_over < philo->game->nb_philo)
@@ -89,7 +92,6 @@ int			philo_circle(t_philosopher *philo, int *count)
 {
 	get_forks(philo);
 	ft_eat(philo, count);
-	if (!philo->game->nb_philo_eat || *count < philo->game->nb_philo_eat)
-		ft_sleep(philo);
+	ft_sleep(philo);
 	return (SUCCESS);
 }

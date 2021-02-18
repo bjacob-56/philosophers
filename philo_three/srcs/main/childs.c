@@ -6,11 +6,37 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 17:21:20 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 08:35:07 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 10:59:37 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
+
+void	*check_full(void *ptr)
+{
+	t_game *game;
+
+	game = (t_game*)ptr;
+	sem_wait(game->full_sem);
+	sem_wait(game->print_sem);
+	printf("%d Every philosopher has eaten %d times\n",
+			get_time() - game->start_time,
+			game->nb_philo_eat);
+	return (ptr);
+}
+
+int		print_full(t_game *game)
+{
+	pthread_t	thread_full;
+
+	if (pthread_create(&thread_full, NULL,
+					&check_full, (void*)game))
+		printf("The thread couldn't be created\n");
+	else if (pthread_detach(((thread_full))))
+		printf("The thread couldn't be detached\n");
+	usleep(1000 * 50);
+	return (SUCCESS);
+}
 
 int		create_childs(t_game *game)
 {
@@ -68,6 +94,7 @@ int		manage_childs(t_game *game)
 	i = -1;
 	while (++i < game->nb_philo)
 		sem_wait(game->end_sem);
+	print_full(game);
 	ft_kill_all_child(game, game->nb_philo);
 	return (SUCCESS);
 }

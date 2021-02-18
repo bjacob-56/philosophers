@@ -14,7 +14,6 @@ NAME = philo_three
 
 CC = clang
 RM = rm -f
-# CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 CFLAGS = -Wall -Wextra -Werror -g
 THFLAGS = -lpthread -D_REENTRANT
 INC =	-I./includes 

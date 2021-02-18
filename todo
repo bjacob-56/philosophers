@@ -2,17 +2,11 @@ Philo_one:
     - Pourquoi "=================================================================" ?
 
 Philo_two:
-    - Pourquoi "=================================================================" ?
-    - ./philo_two 5 805 400 400 7
-        Mauvais exit parfois quand un philosophe meurt
-    - ./philo_two 5 800 200 200 7
-        Parfois delacage de 10 en prenant une fourchette
     - ./philo_two 4 100 50 51 7
-        action apres la mort
+        boucle infini apres la mort
 
 Philo_three:
-    - ./philo_three 6 100 40 40 4
-        les philosophers meurent trop tard (en prenant la fork)
+
 
 Global:
     - valeur limite autorisees a verifier

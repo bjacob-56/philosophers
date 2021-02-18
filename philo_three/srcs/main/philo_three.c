@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:35 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 08:18:01 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 10:58:28 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	launch_philo(t_philosopher *philo)
 	int				count;
 
 	count = 0;
+	philo->time_last_meal = philo->game->start_time;
 	if (pthread_create(&philo->thread, NULL,
 					&check_dead_philo_background, (void*)philo))
 	{
@@ -28,14 +29,9 @@ void	launch_philo(t_philosopher *philo)
 		print_error(philo->game->print_sem, F_THREAD_DETACH);
 		inc_sem_end(philo->game);
 	}
-	while ((!philo->game->nb_philo_eat || count < philo->game->nb_philo_eat))
+	while (1)
 		philo_circle(philo, &count);
 	sem_post(philo->game->end_sem);
-	while (1)
-	{
-		philo->time_last_meal = get_time();
-		usleep(1000 * philo->game->t_eat / 2);
-	}
 }
 
 int		ft_kill_all_child(t_game *game, int nb_childs)

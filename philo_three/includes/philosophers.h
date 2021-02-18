@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:13:31 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 08:34:33 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 10:22:00 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct		s_game
 	sem_t			*print_sem;
 	sem_t			*fork_sem;
 	sem_t			*end_sem;
+	sem_t			*full_sem;
 	int				next_philo_eat;
 	pid_t			*tab_pid;
 }					t_game;

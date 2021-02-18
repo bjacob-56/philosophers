@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:06 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 16:07:49 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 10:14:19 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ static int	ft_eat(t_philosopher *philo, int *count)
 	sem_post(philo->game->fork_sem);
 	sem_post(philo->game->fork_sem);
 	(*count)++;
-	if (*count < philo->game->nb_philo_eat || !philo->game->nb_philo_eat)
-		print_state(philo, "is sleeping");
-	else if (*count == philo->game->nb_philo_eat)
-		print_state(philo, "is full");
+	if (*count == philo->game->nb_philo_eat)
+		sem_post(philo->game->end_sem);
 	return (SUCCESS);
 }
 
@@ -58,6 +56,7 @@ static int	ft_sleep(t_philosopher *philo, int *count)
 	int	start_sleep;
 	int	time;
 
+	print_state(philo, "is sleeping");
 	start_sleep = get_time();
 	time = start_sleep;
 	if (!philo->game->nb_philo_eat || *count < philo->game->nb_philo_eat)

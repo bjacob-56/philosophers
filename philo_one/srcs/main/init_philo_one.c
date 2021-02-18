@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:32:21 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 16:39:57 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 10:35:34 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,14 @@ int			catch_arg(t_game *game, int argc, char **argv)
 	game->t_sleep = ft_atoi(argv[4]);
 	game->nb_philo_eat = 0;
 	if (argc == 6)
+	{
 		game->nb_philo_eat = ft_atoi(argv[5]);
+		if (!game->nb_philo_eat)
+		{
+			printf("0 Every philosopher has eaten 0 times\n");
+			exit(SUCCESS);
+		}
+	}
 	return (SUCCESS);
 }
 
@@ -52,7 +59,10 @@ static int	fork_init(t_game *game, int i)
 	fork->number = i + 1;
 	if (pthread_mutex_init(&fork->mutex, NULL))
 		return (ft_error(game, NULL, F_MUTEX_CREATE, i));
-	fork->last_philo = -1;
+	if (i % 2)
+		fork->last_philo = i + 1;
+	else
+		fork->last_philo = (i + game->nb_philo - 1) % game->nb_philo + 1;
 	(game->fork)[i] = fork;
 	return (SUCCESS);
 }

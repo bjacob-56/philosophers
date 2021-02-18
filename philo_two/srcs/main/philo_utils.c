@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:40 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 15:52:19 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 10:47:41 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 int	print_state_full(t_philosopher *philo)
 {
-	print_state(philo, "is full");
-	philo->state = FULL;
-	philo->game->is_over++;
+	sem_wait(philo->game->print_sem);
+	if (philo->game->is_over < philo->game->nb_philo)
+	{
+		printf("%d Every philosopher has eaten %d times\n",
+				get_time() - philo->game->start_time,
+				philo->game->nb_philo_eat);
+		philo->game->is_over = philo->game->nb_philo;
+	}
+	sem_post(philo->game->print_sem);
 	return (SUCCESS);
 }
 
@@ -42,7 +48,7 @@ int	get_time(void)
 
 int	check_dead(int time, t_philosopher *philo)
 {
-	if (time - philo->time_last_meal > philo->game->t_die)
+	if (time - philo->time_last_meal >= philo->game->t_die)
 	{
 		printf("%d %d %s\n", get_time() - philo->game->start_time,
 				philo->number, "died");
@@ -61,8 +67,7 @@ int	check_all_philo_dead(t_game *game)
 		while (++i < game->nb_philo && game->is_over < game->nb_philo)
 		{
 			sem_wait(game->print_sem);
-			if (!game->nb_philo_eat || ((game->philo)[i])->state != FULL)
-				check_dead(get_time(), (game->philo)[i]);
+			check_dead(get_time(), (game->philo)[i]);
 			sem_post(game->print_sem);
 		}
 		usleep(100);

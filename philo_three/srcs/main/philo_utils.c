@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:47 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 08:35:24 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 10:58:52 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,16 @@ void	inc_sem_end(t_game *game)
 	while (++i < game->nb_philo)
 		sem_post(game->end_sem);
 	sem_wait(game->print_sem);
+	sem_wait(game->print_sem);
 }
 
 int		check_dead(int time, t_philosopher *philo)
 {
-	if (time - philo->time_last_meal > philo->game->t_die)
+	if (time - philo->time_last_meal >= philo->game->t_die)
 	{
 		printf("%d %d %s\n", get_time() - philo->game->start_time,
 				philo->number, "died");
+		sem_wait(philo->game->full_sem);
 		inc_sem_end(philo->game);
 	}
 	return (SUCCESS);
@@ -60,7 +62,7 @@ void	*check_dead_philo_background(void *ptr)
 		sem_wait(philo->game->print_sem);
 		check_dead(get_time(), philo);
 		sem_post(philo->game->print_sem);
-		usleep(100);
+		usleep(500);
 	}
 	return (ptr);
 }

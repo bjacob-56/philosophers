@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:32:49 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/17 16:49:08 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 09:51:06 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	*launch_philo(void *ptr)
 
 	philo = (t_philosopher*)ptr;
 	count = 0;
-	while (philo->game->is_over < philo->game->nb_philo &&
-		(!philo->game->nb_philo_eat || count < philo->game->nb_philo_eat))
+	philo->time_last_meal = philo->game->start_time;
+	while (philo->game->is_over < philo->game->nb_philo)
 		philo_circle(philo, &count);
 	return (ptr);
 }
