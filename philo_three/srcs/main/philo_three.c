@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:35 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 10:58:28 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 13:48:09 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,30 @@ void	launch_philo(t_philosopher *philo)
 	while (1)
 		philo_circle(philo, &count);
 	sem_post(philo->game->end_sem);
+}
+
+int		create_semaphores(t_game *game)
+{
+	game->print_sem = NULL;
+	game->fork_sem = NULL;
+	game->end_sem = NULL;
+	sem_unlink("/print_sem");
+	sem_unlink("/fork_sem");
+	sem_unlink("/end_sem");
+	sem_unlink("/full_sem");
+	game->print_sem = sem_open("/print_sem", O_CREAT, S_IRWXU, 1);
+	if (game->print_sem == SEM_FAILED)
+		return (ft_error(game, NULL, F_SEM_CREATE, 0));
+	game->fork_sem = sem_open("/fork_sem", O_CREAT, S_IRWXU, game->nb_philo);
+	if (game->fork_sem == SEM_FAILED)
+		return (ft_error(game, NULL, F_SEM_CREATE, 0));
+	game->end_sem = sem_open("/end_sem", O_CREAT, S_IRWXU, 0);
+	if (game->end_sem == SEM_FAILED)
+		return (ft_error(game, NULL, F_SEM_CREATE, 0));
+	game->full_sem = sem_open("/full_sem", O_CREAT, S_IRWXU, 1);
+	if (game->full_sem == SEM_FAILED)
+		return (ft_error(game, NULL, F_SEM_CREATE, 0));
+	return (SUCCESS);
 }
 
 int		ft_kill_all_child(t_game *game, int nb_childs)

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:37:09 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 13:27:45 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 13:46:51 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void		check_args_init(t_game *game, int argc)
 {
 	if (!game->nb_philo || !game->t_die || !game->t_eat || !game->t_sleep)
-		exit (SUCCESS);
+		exit(SUCCESS);
 	if (argc == 6 && !game->nb_philo_eat)
 	{
 		printf("0 Every philosopher has eaten 0 times\n");

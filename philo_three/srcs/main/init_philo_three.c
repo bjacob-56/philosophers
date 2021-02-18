@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:35:19 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 13:27:24 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 13:47:38 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void		check_args_init(t_game *game, int argc)
 {
 	if (!game->nb_philo || !game->t_die || !game->t_eat || !game->t_sleep)
-		exit (SUCCESS);
+		exit(SUCCESS);
 	if (argc == 6 && !game->nb_philo_eat)
 	{
 		printf("0 Every philosopher has eaten 0 times\n");
@@ -74,30 +74,6 @@ static int	fork_init(t_game *game, int i)
 	if (fork->private_fork_sem == SEM_FAILED)
 		return (ft_error(game, NULL, F_SEM_CREATE, i));
 	(game->fork)[i] = fork;
-	return (SUCCESS);
-}
-
-static int	create_semaphores(t_game *game)
-{
-	game->print_sem = NULL;
-	game->fork_sem = NULL;
-	game->end_sem = NULL;
-	sem_unlink("/print_sem");
-	sem_unlink("/fork_sem");
-	sem_unlink("/end_sem");
-	sem_unlink("/full_sem");
-	game->print_sem = sem_open("/print_sem", O_CREAT, S_IRWXU, 1);
-	if (game->print_sem == SEM_FAILED)
-		return (ft_error(game, NULL, F_SEM_CREATE, 0));
-	game->fork_sem = sem_open("/fork_sem", O_CREAT, S_IRWXU, game->nb_philo);
-	if (game->fork_sem == SEM_FAILED)
-		return (ft_error(game, NULL, F_SEM_CREATE, 0));
-	game->end_sem = sem_open("/end_sem", O_CREAT, S_IRWXU, 0);
-	if (game->end_sem == SEM_FAILED)
-		return (ft_error(game, NULL, F_SEM_CREATE, 0));
-	game->full_sem = sem_open("/full_sem", O_CREAT, S_IRWXU, 1);
-	if (game->full_sem == SEM_FAILED)
-		return (ft_error(game, NULL, F_SEM_CREATE, 0));
 	return (SUCCESS);
 }
 

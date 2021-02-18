@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 16:13:31 by bjacob            #+#    #+#             */
-/*   Updated: 2021/02/18 10:22:00 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2021/02/18 13:48:03 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct		s_game
 ** philo_three.c
 */
 void				launch_philo(t_philosopher *philo);
+int					create_semaphores(t_game *game);
 int					ft_kill_all_child(t_game *game, int nb_childs);
 
 /*
