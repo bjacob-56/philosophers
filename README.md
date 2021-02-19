@@ -44,4 +44,4 @@ La structure globale de Philo_two est la même que celle de Philo_one.
 
 ## Philo_three
 
-![schema_0](./images_readme/diagram_philo_one.png)
+![schema_0](./images_readme/diagram_philo_three.png)
