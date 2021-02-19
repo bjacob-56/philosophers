@@ -10,7 +10,7 @@ Nous identifierons respectivement les fourchettes et philosophes numéro i par l
 
 Sur les schémas ci-dessous, un philosophe rassasié est dit "full".
 
-### Philo_one
+### *Philo_one*
 
 #### *Spécificités*
 
@@ -18,7 +18,7 @@ Sur les schémas ci-dessous, un philosophe rassasié est dit "full".
 - Les fourchettes sont situées entre les philosophes (fork_n disponible pour philo_n et philo_n+1)
 - Chaque philosophe est géré par un thread
 
-### Philo_two
+### *Philo_two*
 
 #### *Spécificités*
 
@@ -26,7 +26,7 @@ Sur les schémas ci-dessous, un philosophe rassasié est dit "full".
 - Les fourchettes sont situées au centre de la table (fork_n disponible pour tous les philosophes)
 - Chaque philosophe est géré par un thread
 
-### Philo_three
+### *Philo_three*
 
 #### *Spécificités*
 
