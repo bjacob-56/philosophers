@@ -12,9 +12,9 @@ Nous identifierons respectivement les fourchettes et philosophes numéro i par l
 
 #### *Spécificités*
 
-* Utilisation de mutex
-* Les fourchettes sont situées entre les philosophes (fork_n disponible pour philo_n et philo_n+1)
-* Chaque philosophe est géré par un thread
+- Utilisation de mutex
+- Les fourchettes sont situées entre les philosophes (fork_n disponible pour philo_n et philo_n+1)
+- Chaque philosophe est géré par un thread
 
 ### Philo_two
 
@@ -28,7 +28,7 @@ Nous identifierons respectivement les fourchettes et philosophes numéro i par l
 
 #### *Spécificités*
 
-	- Utilisation de semaphores
-	- Les fourchettes sont situées au centre de la table (fork_n disponible pour tous les philosophes)
-	- Chaque philosophe est géré par un fork (child process)
+- Utilisation de semaphores
+- Les fourchettes sont situées au centre de la table (fork_n disponible pour tous les philosophes)
+- Chaque philosophe est géré par un fork (child process)
 
