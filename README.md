@@ -34,4 +34,4 @@ Nous identifierons respectivement les fourchettes et philosophes numéro i par l
 
 ## Philo_one
 
-![schema_0](./image_readme/diagram_philo_one.png)
+![schema_0](./images_readme/diagram_philo_one.png)
