@@ -36,21 +36,21 @@ Sur les schémas ci-dessous, un philosophe rassasié est dit "full".
 
 ## Philo_one
 
-#### Structure globale
+### Structure globale
 
 ![schema_0](./images_readme/diagram_philo_one.png)
 
-#### Gestion des mutex
+### Gestion des mutex
 
 Chaque fourchette a son propre mutex qui permet de la verrouiller lorsqu'un philosophe la prend.
 
 On utilise aussi un mutex partagé par tous les philosophes qui permet de print du texte sans mélange.
 
-#### Vérification de la mort des philosophes
+### Vérification de la mort des philosophes
 
 Le programme "parent" ayant accès aux ressources des threads, c'est lui qui vérifie en permanence en fond si chaque philosophe est encore vivant.
 
-#### Spécificités
+### Spécificités
 
 ##### 1. Eviter de se retrouver bloqué
 
@@ -70,23 +70,23 @@ Pour éviter cette situation :
 
 ## Philo_two
 
-#### Structure globale
+### Structure globale
 
 La structure globale de Philo_two est la même que celle de Philo_one.
 
 ![schema_0](./images_readme/diagram_philo_two.png)
 
-#### Gestion des semaphores
+### Gestion des semaphores
 
 On utilise un seul semaphore global pour gérer l'ensemble des fourchettes. Sa valeur initiale est le nombre de philosophes.
 
 On utilise aussi un semaphore partagé par tous les philosophes qui permet de print du texte sans mélange. Sa valeur initiale est égale à un.
 
-#### Vérification de la mort des philosophes
+### Vérification de la mort des philosophes
 
 Le programme "parent" ayant accès aux ressources des threads, c'est lui qui vérifie en permanence en fond si chaque philosophe est encore vivant.
 
-#### Spécificités
+### Spécificités
 
 ##### 1. Eviter la mort d'un philosophe
 
@@ -98,11 +98,11 @@ Pour éviter cette situation :
 
 ## Philo_three
 
-#### Structure globale
+### Structure globale
 
 ![schema_0](./images_readme/diagram_philo_three.png)
 
-#### Gestion des semaphores et forks
+### Gestion des semaphores et forks
 
 *Cf même section de Philo_two pour le semaphore des fourchettes et celui de l'écriture.*
 
@@ -112,11 +112,11 @@ Contrairement à Philo_one et Philo_two qui utilisaient des threads, l'utilisati
 
 On va utiliser deux semaphores supplémentaires pour ces actions : end_sem et full_sem.
 
-#### Vérification de la mort des philosophes
+### Vérification de la mort des philosophes
 
 Le programme "parent" n'ayant pas accès aux ressources des childs, ceux-ci doivent vérifier eux-mêmes si leur philosophe est encore vivant.
 
-#### Spécificités
+### Spécificités
 
 ##### 1. Indiquer au processus parent qu'un philosophe est rassasié
 
