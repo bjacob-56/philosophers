@@ -57,8 +57,8 @@ Le programme "parent" ayant accès aux ressources des threads, c'est lui qui vé
 Si chaque philosophe prend en même temps sa fourchette gauche, aucun ne pourra prendre sa fourchette droite.
 
 Pour éviter cette situation :
-- Les philosophes paires (0, 2, 4...) commencent par prendre leur fourchette droite, puis leur fourchette gauche.
-- Les philosophes impaires font l'inverse.
+- Les philosophes pairs (0, 2, 4...) commencent par prendre leur fourchette droite, puis leur fourchette gauche.
+- Les philosophes impairs font l'inverse.
 
 ##### 2. Eviter la mort d'un philosophe
 
@@ -66,7 +66,7 @@ Selon les paramètres utilisés, une fourchette pourrait être utilisée deux fo
 
 Pour éviter cette situation :
 - Chaque fourchette note le numéro du dernier philosophe l'ayant utilisée.
-- Un philosophe n4essaye de prendre une fourchette que s'il n'est pas le dernier à l'avoir utilisée.
+- Un philosophe n'essaye de prendre une fourchette que s'il n'est pas le dernier à l'avoir utilisée.
 
 ## Philo_two
 
@@ -120,7 +120,7 @@ Le programme "parent" n'ayant pas accès aux ressources des childs, ceux-ci doiv
 
 ##### 1. Indiquer au processus parent qu'un philosophe est rassasié
 
-Après avoir créé tous les processus fils, le processus parents essaye d'utiliser le semaphore sem_end autant de fois qu'il y a de philosophes.
+Après avoir créé tous les processus fils, le processus parent essaye d'utiliser le semaphore sem_end autant de fois qu'il y a de philosophes.
 
 Lorsqu'un philosophe est rassasié, il transmet l'information au processus parent en incrémentant une fois le semaphore sem_end.
 
@@ -128,7 +128,7 @@ Une fois tous les philosophes rassasiés, le processus parent peut continuer, te
 
 ##### 2. Eviter du retard dans l'annonce de la mort d'un philosophe
 
-L'annonce de la mort d'un philosophe devant être signalées au maximum 10ms après son occurence, il ne faudrait pas qu'elle soit retardée.
+L'annonce de la mort d'un philosophe devant être signalée au maximum 10ms après son occurence, il ne faudrait pas qu'elle soit retardée.
 
 Si un philosophe essaye de prendre une fourchette verrouillée, il se met en attente et ne peux pas vérifier son état (mort/vivant) pendant ce temps.
 
