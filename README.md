@@ -32,3 +32,6 @@ Nous identifierons respectivement les fourchettes et philosophes numéro i par l
 - Les fourchettes sont situées au centre de la table (fork_n disponible pour tous les philosophes)
 - Chaque philosophe est géré par un fork (child process)
 
+## Philo_one
+
+![schema_0](./image_readme/diagram_philo_one.png)
