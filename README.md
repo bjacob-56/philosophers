@@ -12,7 +12,7 @@ Sur les schémas ci-dessous, un philosophe rassasié est dit "full".
 
 ### *Philo_one*
 
-#### *Spécificités*
+###### *Spécificités*
 
 - Utilisation de mutex
 - Les fourchettes sont situées entre les philosophes (fork_n disponible pour philo_n et philo_n+1)
