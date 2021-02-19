@@ -70,6 +70,12 @@ Pour éviter cette situation :
 
 ## Philo_two
 
+### Structure globale
+
+La structure globale de Philo_two est la même que celle de Philo_one.
+
+![schema_0](./images_readme/diagram_philo_two.png)
+
 ### Gestion des semaphores
 
 On utilise un seul semaphore global pour gérer l'ensemble des fourchettes. Sa valeur initiale est le nombre de philosophes.
@@ -90,34 +96,44 @@ Pour éviter cette situation :
 - On utilise un entier croissant représentant le prochain philosophe à être autorisé à prendre une fourchette.
 - Quand le philosophe en question a pris ses deux fouchettes, on incrémente l'entier (ou on lui donne la valeur de 1 si on était rendu au dernier philosophe).
 
-### Structure globale
-
-La structure globale de Philo_two est la même que celle de Philo_one.
-
-![schema_0](./images_readme/diagram_philo_two.png)
-
 ## Philo_three
 
 ### Structure globale
 
 ![schema_0](./images_readme/diagram_philo_three.png)
 
-### Gestion des semaphores
+### Gestion des semaphores et forks
 
 *Cf même section de Philo_two pour le semaphore des fourchettes et celui de l'écriture.*
 
 Contrairement à Philo_one et Philo_two qui utilisaient des threads, l'utilisation de processus fils ne permet pas :
 - Aux childs de modifier une valeur dans le processus parent (pour indiquer qu'un philosophe est mort ou rassasié).
-- Au parent de 
+- Au parent de vérifier si le philosophe d'un des childs est mort.
 
-
+On va utiliser deux semaphores supplémentaires pour ces actions : end_sem et full_sem.
 
 ### Vérification de la mort des philosophes
 
-Le programme "parent" ayant accès aux ressources des threads, c'est lui qui vérifie en permanence en fond si chaque philosophe est encore vivant.
+Le programme "parent" n'ayant pas accès aux ressources des childs, ceux-ci doivent vérifier eux-mêmes si leur philosophe est encore vivant.
 
 ### Spécificités
 
-#### 1. Eviter la mort d'un philosophe
+#### 1. Indiquer au processus parent qu'un philosophe est rassasié
 
-*Cf même section de Philo_two.*
+Après avoir créé tous les processus fils, le processus parents essaye d'utiliser le semaphore sem_end autant de fois qu'il y a de philosophes.
+
+Lorsqu'un philosophe est rassasié, il transmet l'information au processus parent en incrémentant une fois le semaphore sem_end.
+
+Une fois tous les philosophes rassasiés, le processus parent peut continuer, terminer tous les processus fils et quitter.
+
+#### 2. Eviter du retard dans l'annonce de la mort d'un philosophe
+
+L'annonce de la mort d'un philosophe devant être signalées au maximum 10ms après son occurence, il ne faudrait pas qu'elle soit retardée.
+
+Si un philosophe essaye de prendre une fourchette verrouillée, il se met en attente et ne peux pas vérifier son état (mort/vivant) pendant ce temps.
+
+On crée donc un thread dès l'initialisation du child. Ce thread vérifie en permanence en fond si le philosophe de son processus est mort.
+
+Si un philosophe meurt, le processsus concerné transmet l'information au processus parent en incrémentant le semaphore end_sem du nombre de philosophes.
+
+Il verrouille également le semaphore, empêchant l'écriture du message indiquant que tous les philosophes sont rassasiés.
