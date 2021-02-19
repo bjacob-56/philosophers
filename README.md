@@ -35,3 +35,13 @@ Nous identifierons respectivement les fourchettes et philosophes numéro i par l
 ## Philo_one
 
 ![schema_0](./images_readme/diagram_philo_one.png)
+
+## Philo_two
+
+La structure globale de Philo_two est la même que celle de Philo_one.
+
+![schema_0](./images_readme/diagram_philo_two.png)
+
+## Philo_three
+
+![schema_0](./images_readme/diagram_philo_one.png)
