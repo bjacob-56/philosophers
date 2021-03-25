@@ -9,23 +9,23 @@ Vous trouverez ci-dessous une description du projet Philosophers avec des explic
 * [Philo_two - Spécificités](#philo_two---spécificités)  
 * [Philo_three - Spécificités](#philo_three---spécificités)  
 
-[Philo_one](#philo_one)  
-* [Structure globale](#1-structure-globale)  
-* [Gestion des mutex](#1-gestion-des-mutex)  
-* [Vérification de la mort des philosophes](#1-vérification-de-la-mort-des-philosophes)  
-* [Spécificités](#1-spécificités)
+[Philo_one](#1philo_one)  
+* [Structure globale](#11-structure-globale)  
+* [Gestion des mutex](#12-gestion-des-mutex)  
+* [Vérification de la mort des philosophes](#13-vérification-de-la-mort-des-philosophes)  
+* [Spécificités](#14-spécificités)
 
-[Philo_two](#philo_two)  
-* [Structure globale](#2-structure-globale)  
-* [Gestion des semaphores](#2-gestion-des-semaphores)  
-* [Vérification de la mort des philosophes](#2-vérification-de-la-mort-des-philosophes)  
-* [Spécificités](#2-spécificités)
+[Philo_two](#2philo_two)  
+* [Structure globale](#21-structure-globale)  
+* [Gestion des semaphores](#22-gestion-des-semaphores)  
+* [Vérification de la mort des philosophes](#23-vérification-de-la-mort-des-philosophes)  
+* [Spécificités](#24-spécificités)
 
-[Philo_three](#philo_three)  
-* [Structure globale](#3-structure-globale)  
-* [Gestion des semaphores et forks](#3-gestion-des-semaphores-et-forks)  
-* [Vérification de la mort des philosophes](#3-vérification-de-la-mort-des-philosophes)  
-* [Spécificités](#3-spécificités)
+[Philo_three](#3philo_three)  
+* [Structure globale](#31-structure-globale)  
+* [Gestion des semaphores et forks](#32-gestion-des-semaphores-et-forks)  
+* [Vérification de la mort des philosophes](#33-vérification-de-la-mort-des-philosophes)  
+* [Spécificités](#34-spécificités)
 
 ## Introduction
 
@@ -55,25 +55,25 @@ Sur les schémas ci-dessous, un philosophe rassasié est dit "full".
 
 ###### &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *[to the top](#philosophers)*
 
-## Philo_one
+## 1. Philo_one
 
-### 1. Structure globale
+### 1.1. Structure globale
 
 ![schema_0](./images_readme/diagram_philo_one.png)
 
-### 1. Gestion des mutex
+### 1.2. Gestion des mutex
 
 Chaque fourchette a son propre mutex qui permet de la verrouiller lorsqu'un philosophe la prend.
 
 On utilise aussi un mutex partagé par tous les philosophes qui permet de print du texte sans mélange.
 
-### 1. Vérification de la mort des philosophes
+### 1.3. Vérification de la mort des philosophes
 
 Le programme "parent" ayant accès aux ressources des threads, c'est lui qui vérifie en permanence en fond si chaque philosophe est encore vivant.
 
-### 1. Spécificités
+### 1.4. Spécificités
 
-##### 1. Eviter de se retrouver bloqué
+##### 1.4.1. Eviter de se retrouver bloqué
 
 Si chaque philosophe prend en même temps sa fourchette gauche, aucun ne pourra prendre sa fourchette droite.
 
@@ -81,7 +81,7 @@ Pour éviter cette situation :
 - Les philosophes pairs (0, 2, 4...) commencent par prendre leur fourchette droite, puis leur fourchette gauche.
 - Les philosophes impairs font l'inverse.
 
-##### 2. Eviter la mort d'un philosophe
+##### 1.4.2. Eviter la mort d'un philosophe
 
 Selon les paramètres utilisés, une fourchette pourrait être utilisée deux fois d'affilée par le même philosophe.
 
@@ -91,27 +91,27 @@ Pour éviter cette situation :
 
 ###### &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *[to the top](#philosophers)*
 
-## Philo_two
+## 2. Philo_two
 
-### 2. 1-Structure globale
+### 2.1. Structure globale
 
 La structure globale de Philo_two est la même que celle de Philo_one.
 
 ![schema_0](./images_readme/diagram_philo_two.png)
 
-### 2. Gestion des semaphores
+### 2.2. Gestion des semaphores
 
 On utilise un seul semaphore global pour gérer l'ensemble des fourchettes. Sa valeur initiale est le nombre de philosophes.
 
 On utilise aussi un semaphore partagé par tous les philosophes qui permet de print du texte sans mélange. Sa valeur initiale est égale à un.
 
-### 2. Vérification de la mort des philosophes
+### 2.3. Vérification de la mort des philosophes
 
 Le programme "parent" ayant accès aux ressources des threads, c'est lui qui vérifie en permanence en fond si chaque philosophe est encore vivant.
 
-### 2. Spécificités
+### 2.4. Spécificités
 
-##### 1. Eviter la mort d'un philosophe
+##### 2.4.1. Eviter la mort d'un philosophe
 
 Si aucune précaution n'est prise, certains philosophes pourraient manger deux fois pendant que d'autres attendent leur tour, provoquant leur mort.
 
@@ -121,13 +121,13 @@ Pour éviter cette situation :
 
 ###### &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *[to the top](#philosophers)*
 
-## Philo_three
+## 3. Philo_three
 
-### 3.Structure globale
+### 3.1. Structure globale
 
 ![schema_0](./images_readme/diagram_philo_three.png)
 
-### 3.Gestion des semaphores et forks
+### 3.2. Gestion des semaphores et forks
 
 *Cf même section de Philo_two pour le semaphore des fourchettes et celui de l'écriture.*
 
@@ -137,13 +137,13 @@ Contrairement à Philo_one et Philo_two qui utilisaient des threads, l'utilisati
 
 On va utiliser deux semaphores supplémentaires pour ces actions : end_sem et full_sem.
 
-### 3.Vérification de la mort des philosophes
+### 3.3. Vérification de la mort des philosophes
 
 Le programme "parent" n'ayant pas accès aux ressources des childs, ceux-ci doivent vérifier eux-mêmes si leur philosophe est encore vivant.
 
-### 3.Spécificités
+### 3.4. Spécificités
 
-##### 1. Indiquer au processus parent qu'un philosophe est rassasié
+##### 3.4.1. Indiquer au processus parent qu'un philosophe est rassasié
 
 Après avoir créé tous les processus fils, le processus parent essaye d'utiliser le semaphore sem_end autant de fois qu'il y a de philosophes.
 
@@ -151,7 +151,7 @@ Lorsqu'un philosophe est rassasié, il transmet l'information au processus paren
 
 Une fois tous les philosophes rassasiés, le processus parent peut continuer, terminer tous les processus fils et quitter.
 
-##### 2. Eviter du retard dans l'annonce de la mort d'un philosophe
+##### 3.4.2. Eviter du retard dans l'annonce de la mort d'un philosophe
 
 L'annonce de la mort d'un philosophe devant être signalée au maximum 10ms après son occurence, il ne faudrait pas qu'elle soit retardée.
 
