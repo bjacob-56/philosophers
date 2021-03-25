@@ -9,19 +9,19 @@ Vous trouverez ci-dessous une description du projet Philosophers avec des explic
 * [Philo_two - Spécificités](#philo_two---spécificités)  
 * [Philo_three - Spécificités](#philo_three---spécificités)  
 
-[Philo_one](#1philo_one)  
+[Philo_one](#1-philo_one)  
 * [Structure globale](#11-structure-globale)  
 * [Gestion des mutex](#12-gestion-des-mutex)  
 * [Vérification de la mort des philosophes](#13-vérification-de-la-mort-des-philosophes)  
 * [Spécificités](#14-spécificités)
 
-[Philo_two](#2philo_two)  
+[Philo_two](#2-philo_two)  
 * [Structure globale](#21-structure-globale)  
 * [Gestion des semaphores](#22-gestion-des-semaphores)  
 * [Vérification de la mort des philosophes](#23-vérification-de-la-mort-des-philosophes)  
 * [Spécificités](#24-spécificités)
 
-[Philo_three](#3philo_three)  
+[Philo_three](#3-philo_three)  
 * [Structure globale](#31-structure-globale)  
 * [Gestion des semaphores et forks](#32-gestion-des-semaphores-et-forks)  
 * [Vérification de la mort des philosophes](#33-vérification-de-la-mort-des-philosophes)  
