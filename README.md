@@ -2,6 +2,31 @@
 
 Vous trouverez ci-dessous une description du projet Philosophers avec des explications et justifications des choix effectués.
 
+## SUMMARY
+
+[Introduction](#introduction)  
+* [Philo_one - Spécificités](#philoone---spécificités)  
+* [Philo_two - Spécificités](#philotwo---spécificités)  
+* [Philo_three - Spécificités](#philothree---spécificités)  
+
+[Philo_one](#philoone)  
+* [Structure globale](#structure-globale)  
+* [Gestion des mutex](#gestion-des-mutex)  
+* [Vérification de la mort des philosophes](#vérification-de-la-mort-des-philosophes)  
+* [Spécificités](#spécificités)
+
+[Philo_two](#philotwo)  
+* [Structure globale](#structure-globale)  
+* [Gestion des semaphores](#gestion-des-semaphores)  
+* [Vérification de la mort des philosophes](#vérification-de-la-mort-des-philosophes)  
+* [Spécificités](#spécificités)
+
+[Philo_three](#philothree)  
+* [Structure globale](#structure-globale)  
+* [Gestion des semaphores et forks](#gestion-des-semaphores-et-forks)  
+* [Vérification de la mort des philosophes](#vérification-de-la-mort-des-philosophes)  
+* [Spécificités](#spécificités)
+
 ## Introduction
 
 Le sujet du projet est disponible dans le repository git, nous rappelerons seulement ici les spécificités des 3 parties (philo_one, philo_two et philo_three) du projet.
@@ -10,25 +35,19 @@ Nous identifierons respectivement les fourchettes et philosophes numéro i par l
 
 Sur les schémas ci-dessous, un philosophe rassasié est dit "full".
 
-#### *Philo_one*
-
-##### *Spécificités*
+#### *Philo_one - Spécificités*
 
 - Utilisation de mutex
 - Les fourchettes sont situées entre les philosophes (fork_n disponible pour philo_n et philo_n+1)
 - Chaque philosophe est géré par un thread
 
-#### *Philo_two*
-
-##### *Spécificités*
+#### *Philo_two - Spécificités*
 
 - Utilisation de semaphores
 - Les fourchettes sont situées au centre de la table (fork_n disponible pour tous les philosophes)
 - Chaque philosophe est géré par un thread
 
-#### *Philo_three*
-
-##### *Spécificités*
+#### *Philo_three - Spécificités*
 
 - Utilisation de semaphores
 - Les fourchettes sont situées au centre de la table (fork_n disponible pour tous les philosophes)
@@ -137,3 +156,6 @@ On crée donc un thread dès l'initialisation du child. Ce thread vérifie en pe
 Si un philosophe meurt, le processsus concerné transmet l'information au processus parent en incrémentant le semaphore end_sem du nombre de philosophes.
 
 Il verrouille également le semaphore, empêchant l'écriture du message indiquant que tous les philosophes sont rassasiés.
+
+
+###### &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *[to the top](#philosophers)*
