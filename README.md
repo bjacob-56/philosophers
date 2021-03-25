@@ -10,22 +10,22 @@ Vous trouverez ci-dessous une description du projet Philosophers avec des explic
 * [Philo_three - Spécificités](#philothree---spécificités)  
 
 [Philo_one](#philo_one)  
-* [Structure globale](#structure-globale)  
-* [Gestion des mutex](#gestion-des-mutex)  
-* [Vérification de la mort des philosophes](#vérification-de-la-mort-des-philosophes)  
-* [Spécificités](#spécificités)
+* [Structure globale](#1-structure-globale)  
+* [Gestion des mutex](#1-gestion-des-mutex)  
+* [Vérification de la mort des philosophes](#1-vérification-de-la-mort-des-philosophes)  
+* [Spécificités](#1-spécificités)
 
 [Philo_two](#philo_two)  
-* [Structure globale](#structure-globale)  
-* [Gestion des semaphores](#gestion-des-semaphores)  
-* [Vérification de la mort des philosophes](#vérification-de-la-mort-des-philosophes)  
-* [Spécificités](#spécificités)
+* [Structure globale](#2-structure-globale)  
+* [Gestion des semaphores](#2-gestion-des-semaphores)  
+* [Vérification de la mort des philosophes](#2-vérification-de-la-mort-des-philosophes)  
+* [Spécificités](#2-spécificités)
 
 [Philo_three](#philo_three)  
-* [Structure globale](#structure-globale)  
-* [Gestion des semaphores et forks](#gestion-des-semaphores-et-forks)  
-* [Vérification de la mort des philosophes](#vérification-de-la-mort-des-philosophes)  
-* [Spécificités](#spécificités)
+* [Structure globale](#3-structure-globale)  
+* [Gestion des semaphores et forks](#3-gestion-des-semaphores-et-forks)  
+* [Vérification de la mort des philosophes](#3-vérification-de-la-mort-des-philosophes)  
+* [Spécificités](#3-spécificités)
 
 ## Introduction
 
@@ -55,21 +55,21 @@ Sur les schémas ci-dessous, un philosophe rassasié est dit "full".
 
 ## Philo_one
 
-### Structure globale
+### 1. Structure globale
 
 ![schema_0](./images_readme/diagram_philo_one.png)
 
-### Gestion des mutex
+### 1. Gestion des mutex
 
 Chaque fourchette a son propre mutex qui permet de la verrouiller lorsqu'un philosophe la prend.
 
 On utilise aussi un mutex partagé par tous les philosophes qui permet de print du texte sans mélange.
 
-### Vérification de la mort des philosophes
+### 1. Vérification de la mort des philosophes
 
 Le programme "parent" ayant accès aux ressources des threads, c'est lui qui vérifie en permanence en fond si chaque philosophe est encore vivant.
 
-### Spécificités
+### 1. Spécificités
 
 ##### 1. Eviter de se retrouver bloqué
 
@@ -89,23 +89,23 @@ Pour éviter cette situation :
 
 ## Philo_two
 
-### Structure globale
+### 2. 1-Structure globale
 
 La structure globale de Philo_two est la même que celle de Philo_one.
 
 ![schema_0](./images_readme/diagram_philo_two.png)
 
-### Gestion des semaphores
+### 2. Gestion des semaphores
 
 On utilise un seul semaphore global pour gérer l'ensemble des fourchettes. Sa valeur initiale est le nombre de philosophes.
 
 On utilise aussi un semaphore partagé par tous les philosophes qui permet de print du texte sans mélange. Sa valeur initiale est égale à un.
 
-### Vérification de la mort des philosophes
+### 2. Vérification de la mort des philosophes
 
 Le programme "parent" ayant accès aux ressources des threads, c'est lui qui vérifie en permanence en fond si chaque philosophe est encore vivant.
 
-### Spécificités
+### 2. Spécificités
 
 ##### 1. Eviter la mort d'un philosophe
 
@@ -117,11 +117,11 @@ Pour éviter cette situation :
 
 ## Philo_three
 
-### Structure globale
+### 3.Structure globale
 
 ![schema_0](./images_readme/diagram_philo_three.png)
 
-### Gestion des semaphores et forks
+### 3.Gestion des semaphores et forks
 
 *Cf même section de Philo_two pour le semaphore des fourchettes et celui de l'écriture.*
 
@@ -131,11 +131,11 @@ Contrairement à Philo_one et Philo_two qui utilisaient des threads, l'utilisati
 
 On va utiliser deux semaphores supplémentaires pour ces actions : end_sem et full_sem.
 
-### Vérification de la mort des philosophes
+### 3.Vérification de la mort des philosophes
 
 Le programme "parent" n'ayant pas accès aux ressources des childs, ceux-ci doivent vérifier eux-mêmes si leur philosophe est encore vivant.
 
-### Spécificités
+### 3.Spécificités
 
 ##### 1. Indiquer au processus parent qu'un philosophe est rassasié
 
