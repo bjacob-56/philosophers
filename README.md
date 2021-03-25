@@ -9,19 +9,19 @@ Vous trouverez ci-dessous une description du projet Philosophers avec des explic
 * [Philo_two - Spécificités](#philotwo---spécificités)  
 * [Philo_three - Spécificités](#philothree---spécificités)  
 
-[Philo_one](#philoone)  
+[Philo_one](#philo_one)  
 * [Structure globale](#structure-globale)  
 * [Gestion des mutex](#gestion-des-mutex)  
 * [Vérification de la mort des philosophes](#vérification-de-la-mort-des-philosophes)  
 * [Spécificités](#spécificités)
 
-[Philo_two](#philotwo)  
+[Philo_two](#philo_two)  
 * [Structure globale](#structure-globale)  
 * [Gestion des semaphores](#gestion-des-semaphores)  
 * [Vérification de la mort des philosophes](#vérification-de-la-mort-des-philosophes)  
 * [Spécificités](#spécificités)
 
-[Philo_three](#philothree)  
+[Philo_three](#philo_three)  
 * [Structure globale](#structure-globale)  
 * [Gestion des semaphores et forks](#gestion-des-semaphores-et-forks)  
 * [Vérification de la mort des philosophes](#vérification-de-la-mort-des-philosophes)  
@@ -35,19 +35,19 @@ Nous identifierons respectivement les fourchettes et philosophes numéro i par l
 
 Sur les schémas ci-dessous, un philosophe rassasié est dit "full".
 
-#### *Philo_one - Spécificités*
+#### Philo_one - Spécificités
 
 - Utilisation de mutex
 - Les fourchettes sont situées entre les philosophes (fork_n disponible pour philo_n et philo_n+1)
 - Chaque philosophe est géré par un thread
 
-#### *Philo_two - Spécificités*
+#### Philo_two - Spécificités
 
 - Utilisation de semaphores
 - Les fourchettes sont situées au centre de la table (fork_n disponible pour tous les philosophes)
 - Chaque philosophe est géré par un thread
 
-#### *Philo_three - Spécificités*
+#### Philo_three - Spécificités
 
 - Utilisation de semaphores
 - Les fourchettes sont situées au centre de la table (fork_n disponible pour tous les philosophes)
