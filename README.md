@@ -5,9 +5,9 @@ Vous trouverez ci-dessous une description du projet Philosophers avec des explic
 ## SUMMARY
 
 [Introduction](#introduction)  
-* [Philo_one - Spécificités](#philoone---spécificités)  
-* [Philo_two - Spécificités](#philotwo---spécificités)  
-* [Philo_three - Spécificités](#philothree---spécificités)  
+* [Philo_one - Spécificités](#philo_one---spécificités)  
+* [Philo_two - Spécificités](#philo_two---spécificités)  
+* [Philo_three - Spécificités](#philo_three---spécificités)  
 
 [Philo_one](#philo_one)  
 * [Structure globale](#1-structure-globale)  
